@@ -3,3 +3,11 @@
 
 Created in ReactJS
 Using Bulma.io
+
+* ## Front-End:
+* Matt Marra
+* Julio Berina
+---
+* ## Back-End:
+* Drew Umlang
+* Michael Trinh
