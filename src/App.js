@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import './App.css';
+import './bulma.css';
+import LoginComponent from './LoginComponent.jsx'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <header className="header">
-          <h1 className="App-title">All Notes</h1>
+          <h1 className="title">All Notes</h1>
         </header>
+        <LoginComponent></LoginComponent>
         <Page></Page>
       </div>
     );
@@ -21,7 +23,11 @@ class Page extends Component {
     this.state = {
       data : "",
       title : "" || "Untitled",
+      courseName : "" || "Unnamed Course",
+      schoolName : "" || "Unnamed School"
     }
+    // NOTE:
+    //Every function must be bound to the component through these statements
     this.updateState = this.updateState.bind(this);
     this.save = this.save.bind(this);
   }
@@ -37,8 +43,8 @@ class Page extends Component {
   }
   render(){
     return(
-      <div>
-        <p>{`${this.state.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
+      <div className="box">
+        <p className="subtitle">{`${this.state.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
         <textarea name="" id="data" cols="80" rows="70" defaultValue={this.state.data} onChange={this.updateState}></textarea>
         <button onClick={this.save}>Save</button>
       </div>
