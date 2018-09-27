@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 
 class LoginComponent extends Component {
-  // FIXME: The text from the message property does not show up on this page.
   constructor(props){
     super(props);
     this.state = {
-      message : "Hello", // Multi-purpose message to be displayed to the user, blank by default
+      message : "", // Multi-purpose message to be displayed to the user, blank by default
       messageStatus : "black", //color of the message
                               // NOTE: "success" for green "warning" for yellow "danger" for red
       username : "",
@@ -25,18 +25,20 @@ class LoginComponent extends Component {
   }
 
   attemptLogin(e){
-    e.preventDefault();
-    this.setState({message : "Login Successful!",
-                   messageStatus : this.state.username})
   }
 
   render(){
     return(
-      <div className="box has-background-light">
-        <input type="text" className="input" id="username" onChange={this.updateState}/>
-        <input type="password" className="input" id="password" onChange={this.updateState}/>
-        <p className={`has-text-${this.state.messageStatus}`}>{this.state.messsage} Hello</p>
-        <button className="button is-primary" onClick={this.attemptLogin}>Login</button>
+      <div className="container">
+        <div className="box">
+          <label className="label">Email</label>
+          <input type="text" className="input" id="username" onChange={this.updateState}/>
+          <label className="label"><br></br>Password</label>
+          <input type="password" className="input" id="password" onChange={this.updateState}/>
+          <label className={`has-text-${this.state.messageStatus}`}> {this.state.message}<br></br></label>
+          <br></br>
+          <Link to="/notebook"><button className="button is-primary" onClick={this.attemptLogin}>Login</button></Link>
+        </div>
       </div>
     )
   }
