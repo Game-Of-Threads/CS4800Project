@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Markdown } from 'react-showdown';
+import './github-markdown.css';
 //Pages are where notes are taken and marked up
 class Page extends Component {
   constructor(props){
@@ -36,12 +38,16 @@ class Page extends Component {
   }
   save(){
     //saves the note, should autosave as development goes on
+    this.setState({data: document.getElementById("data").value});
     console.log("Note saved.");
   }
   render(){
     return(
       <div>
         <p className="subtitle">{`${this.state.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
+        <div className="markdown-body">
+          <Markdown markup={this.state.data} />
+        </div>
         <textarea id="data" className="textarea" defaultValue={this.state.data} onChange={this.updateState}></textarea>
         <button className="button" onClick={this.save}>Save</button>
       </div>
