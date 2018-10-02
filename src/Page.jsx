@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Markdown } from 'react-showdown';
+import './github-markdown.css';
 //Pages are where notes are taken and marked up
 class Page extends Component {
   constructor(props){
