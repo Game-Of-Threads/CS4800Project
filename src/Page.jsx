@@ -45,11 +45,18 @@ class Page extends Component {
     return(
       <div>
         <p className="subtitle">{`${this.state.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
-        <div className="markdown-body">
-          <Markdown markup={this.state.data} />
+        <div class="columns">
+          <div class="column">
+            <textarea id="data" className="textarea" defaultValue={this.state.data} onChange={this.updateState}></textarea>
+            <br />
+            <button className="button" onClick={this.save}>Save</button>
+          </div>
+          <div class="column">
+            <span className="markdown-body">
+              <Markdown markup={this.state.data} />
+            </span>
+          </div>
         </div>
-        <textarea id="data" className="textarea" defaultValue={this.state.data} onChange={this.updateState}></textarea>
-        <button className="button" onClick={this.save}>Save</button>
       </div>
     )
   }
