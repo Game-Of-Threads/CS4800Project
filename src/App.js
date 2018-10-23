@@ -6,25 +6,25 @@ import Notebook from './Notebook.jsx'
 import {Switch, Route} from 'react-router-dom'
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      schoolName : "" || "Unspecified School"
+    constructor(props){
+        super(props);
+        this.state = {
+            schoolName : "" || "Unspecified School"
+        }
     }
-  }
-  render() {
-    return (
-      <div className="App">
-        <Header schoolName={this.state.schoolName}></Header>
-        <main className="container">
-          <Switch>
-            <Route exact path="/" component={LoginComponent} />
-            <Route path="/notebook" component={Notebook} />
-          </Switch>
-        </main>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="App">
+                <Header schoolName={this.state.schoolName}></Header>
+                <main className="container">
+                    <Switch>
+                        <Route exact path="/" component={LoginComponent} />
+                        <Route path="/notebook" component={Notebook} />
+                    </Switch>
+                </main>
+            </div>
+        );
+    }
 }
 
 export default App;
