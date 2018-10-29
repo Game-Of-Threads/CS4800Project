@@ -8,22 +8,27 @@ class Page extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: "",
+            data: this.props.note.data,
             date: "",
             score: 1,
             author: this.props.username || "Anonymous",
-            title: "" || "Untitled Note",
+            title: this.props.note.title || "Untitled Note",
             courseName: "" || "Unnamed Course",
             schoolName: "" || "Unnamed School",
             saved: true,
+            note : this.props.note,
             AStimer: 0, //autosave timer, resets to 5000 after every change
         }
         // NOTE:
         //Every function must be bound to the component through these statements
         this.updateState = this.updateState.bind(this);
         this.save = this.save.bind(this);
+        this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+      this.setState({ note: nextProps.note});
+    }
     updateState(e) {
         e.preventDefault();
         this.setState({
@@ -32,7 +37,6 @@ class Page extends Component {
             AStimer: 3000 //3 seconds of inactivity before autosaving
         })
     }
-
     autosave() {
         if (this.state.AStimer === 0) {
             this.save()
@@ -47,16 +51,16 @@ class Page extends Component {
         return (
             <div>
                 <SearchBar></SearchBar>
-                <p className="subtitle">{`${this.state.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
+                <p className="subtitle">{`${this.state.note.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
                 <div class="columns">
                     <div class="column">
-                        <textarea id="data" className="textarea" defaultValue={this.state.data} onChange={this.updateState}></textarea>
+                        <textarea id="data" className="textarea" value={this.state.note.data} onChange={this.updateState}></textarea>
                         <br />
                         <button className="button" onClick={this.save}>Save</button>
                     </div>
                     <div class="column">
                         <span className="markdown-body">
-                            <Markdown markup={this.state.data} />
+                            <Markdown markup={this.state.note.data} />
                         </span>
                     </div>
                 </div>
