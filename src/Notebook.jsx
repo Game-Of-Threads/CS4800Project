@@ -21,7 +21,7 @@ class Notebook extends Component {
     this.setState({
       activeNote : newNodeIndex
     })
-    
+
   }
   render() {
         return (

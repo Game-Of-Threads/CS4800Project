@@ -5,25 +5,21 @@ import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter} from 'react-router-dom';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
+import AppContext from './AppProvider.jsx'
 
-const counter = (state = 0, action) => {
-    switch(action.type) {
-       case 'INCREMENT':
-         return state = state + 1;
-
-       case 'DECREMENT':
-         return state = state -1;
-       default:
-         return state;
-     }
-  };
-const store = createStore(counter);
+//this needs a better variable name
+var userInfo = {
+  name : "Billy Bronco",
+  schoolName : "Cal Poly Pomona",
+  major: "Computer Science",
+  reputation: 1990
+}
 
 ReactDOM.render(
-  <Provider store={store}>
     <BrowserRouter>
-      <App/>
+      <AppContext.Provider value={userInfo}>
+        <App/>
+      </AppContext.Provider>
     </BrowserRouter>
-  </Provider>
   ,document.getElementById('root'));
 registerServiceWorker();

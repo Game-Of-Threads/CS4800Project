@@ -10,7 +10,7 @@ module.exports = {
   getCrsName: getCrsName,
   getCrsNum: getCrsNum,
   getCrsTerm: getCrsTerm,
-  // getNoteId: getNoteId,
+  // getdata: getdata,
   getNoteFile: getNoteFile,
   getNoteDate: getNoteDate,
   getCrsDesc: getCrsDesc,
@@ -68,12 +68,12 @@ module.exports = {
      }
    });
        var sql = "SELECT acc_firstName FROM account WHERE acc_id = " + data.toString() + ";";
-       client.query(sql, function(err, results){
+       client.query(sql, function(err, result){
              if (err){
                throw err;
              }
-             //console.log(results.rows[0]); // good
-             return callback(results.rows[0]);
+             //console.log(result.rows[0]); // good
+             return callback(result.rows[0]);
              client.end();
      });
  }
@@ -88,12 +88,12 @@ module.exports = {
      }
    });
        var sql = "SELECT acc_LastName FROM account WHERE acc_id = " + data.toString() + ";";
-       client.query(sql, function(err, results){
+       client.query(sql, function(err, result){
              if (err){
                throw err;
              }
-             //console.log(results.rows[0]); // good
-             return callback(results.rows[0]);
+             //console.log(result.rows[0]); // good
+             return callback(result.rows[0]);
              client.end();
      });
  }
@@ -113,7 +113,7 @@ function getAccEmail(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -133,7 +133,7 @@ function getAccBirth(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     console.log(result.rows[0]);
     client.end();
   });
@@ -154,7 +154,7 @@ function getAccRating(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     console.log(result.rows[0]);
     client.end();
   });
@@ -175,7 +175,7 @@ function getAccType(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     console.log(result.rows[0]);
     client.end();
   });
@@ -313,7 +313,7 @@ function getCrsName(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -333,7 +333,7 @@ function getCrsNum(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -353,7 +353,7 @@ function getCrsDesc(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -373,7 +373,7 @@ function getCrsTerm(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -487,12 +487,12 @@ function getNoteFile(data, callback) {
     }
   });
 
-  var test = "SELECT note_file FROM note WHERE note_id = " + noteId.toString() + ";";
+  var test = "SELECT note_file FROM note WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -507,12 +507,12 @@ function getNoteDate(data, callback) {
     }
   });
 
-  var test = "SELECT note_date FROM note WHERE note_id = " + noteId.toString() + ";";
+  var test = "SELECT note_date FROM note WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -527,12 +527,12 @@ function getNoteRating(data, callback) {
     }
   });
 
-  var test = "SELECT note_rating FROM note WHERE note_id = " + noteId.toString() + ";";
+  var test = "SELECT note_rating FROM note WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -547,12 +547,12 @@ function getNoteAccId(data, callback) {
     }
   });
 
-  var test = "SELECT acc_id FROM note WHERE note_id = " + noteId.toString() + ";";
+  var test = "SELECT acc_id FROM note WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -567,12 +567,12 @@ function getNoteType(data, callback) {
     }
   });
 
-  var test = "SELECT note_type FROM note WHERE note_id = " + noteId.toString() + ";";
+  var test = "SELECT note_type FROM note WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -587,19 +587,19 @@ function getNoteText(data, callback) {
     }
   });
 
-  var test = "SELECT note_text FROM note WHERE note_id = " + noteId.toString() + ";";
+  var test = "SELECT note_text FROM note WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
 
 // ATM the noteFile will be entered as a string but will be patched
 // soon to enter it as a bytea so that postgres can read it
-function alterNoteFile(noteID, newFile) {
+function alterNoteFile(data, newFile) {
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
   var client = new pg.Client(conString);
@@ -609,7 +609,7 @@ function alterNoteFile(noteID, newFile) {
     }
   });
 
-  var test = "UPDATE note SET note_File = '" + newFile.toString() + "' WHERE note_id = " + noteID.toString() + ";";
+  var test = "UPDATE note SET note_File = '" + newFile.toString() + "' WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
@@ -618,7 +618,7 @@ function alterNoteFile(noteID, newFile) {
   });
 }
 
-function alterNoteRating(noteID, newRating) {
+function alterNoteRating(data, newRating) {
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
   var client = new pg.Client(conString);
@@ -628,7 +628,7 @@ function alterNoteRating(noteID, newRating) {
     }
   });
 
-  var test = "UPDATE note SET note_rating = '" + newRating.toString() + "' WHERE note_id = " + noteID.toString() + ";";
+  var test = "UPDATE note SET note_rating = '" + newRating.toString() + "' WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
@@ -637,7 +637,7 @@ function alterNoteRating(noteID, newRating) {
   });
 }
 
-function alterNoteAccId(noteID, accId) {
+function alterNoteAccId(data, accId) {
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
   var client = new pg.Client(conString);
@@ -647,7 +647,7 @@ function alterNoteAccId(noteID, accId) {
     }
   });
 
-  var test = "UPDATE note SET acc_id = '" + accId.toString() + "' WHERE note_id = " + noteID.toString() + ";";
+  var test = "UPDATE note SET acc_id = '" + accId.toString() + "' WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
@@ -656,7 +656,7 @@ function alterNoteAccId(noteID, accId) {
   });
 }
 
-function alterNoteType(noteID, noteType) {
+function alterNoteType(data, noteType) {
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
   var client = new pg.Client(conString);
@@ -666,7 +666,7 @@ function alterNoteType(noteID, noteType) {
     }
   });
 
-  var test = "UPDATE note SET note_type= '" + noteType.toString() + "' WHERE note_id = " + noteID.toString() + ";";
+  var test = "UPDATE note SET note_type= '" + noteType.toString() + "' WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
@@ -675,7 +675,7 @@ function alterNoteType(noteID, noteType) {
   });
 }
 
-function alterNoteText(noteID, noteText) {
+function alterNoteText(data, noteText) {
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
   var client = new pg.Client(conString);
@@ -685,7 +685,7 @@ function alterNoteText(noteID, noteText) {
     }
   });
 
-  var test = "UPDATE note SET note_text= '" + noteText.toString() + "' WHERE note_id = " + noteID.toString() + ";";
+  var test = "UPDATE note SET note_text= '" + noteText.toString() + "' WHERE note_id = " + data.toString() + ";";
   client.query(test, function(err, result) {
     if (err) {
       return console.error('error running query', err);
@@ -729,7 +729,7 @@ function getSecNum(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -749,7 +749,7 @@ function getSecTime(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -769,7 +769,7 @@ function getSecLoc(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
 }
@@ -790,7 +790,7 @@ function getSchName(data, callback) {
     if (err) {
       return console.error('error running query', err);
     }
-    return callback(results.rows[0]);
+    return callback(result.rows[0]);
     client.end();
   });
   //return res;

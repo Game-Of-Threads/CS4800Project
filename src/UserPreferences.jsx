@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
+import SearchBar from './SearchBar.jsx'
+import AppContext from './AppProvider.jsx'
 
 class UserPreferences extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      user : {
-        name : "",
-        school : "",
-        major : "",
-        reputationScore : 0;
-      }
-    }
   }
   render(){
     return(
-      <div className="">
-        <h1>User Preferences</h1>
-        <h2>Name: {this.state.user.name}</h2>
-        <h2>School: {this.state.user.university}</h2>
-        <h2>Major: {this.state.user.major}</h2>
-        <h2>Reputation: {this.state.user.reputationScore}</h2>
-        <h2></h2>
-        <h2></h2>
-      </div>
+        <div className="box">
+          <h1 className="title">User Preferences</h1>
+          <SearchBar></SearchBar>
+            <h2><span className="has-text-weight-semibold">Name:</span>
+              <AppContext.Consumer>{(context) => context.name}</AppContext.Consumer>
+            </h2>
+            <h2><span className="has-text-weight-semibold">School: </span>
+                <AppContext.Consumer>{(context) => context.schoolName}</AppContext.Consumer>
+            </h2>
+            <h2><span className="has-text-weight-semibold">Major: </span>
+                <AppContext.Consumer>{(context) => context.major}</AppContext.Consumer>
+            </h2>
+            <h2><span className="has-text-weight-semibold">Reputation: </span>
+                <AppContext.Consumer>{(context) => context.reputation}</AppContext.Consumer>
+            </h2>
+        </div>
     )
   }
 }
+
+export default UserPreferences;

@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import AppContext from './AppProvider.jsx'
+function DisplaySchool(){
+  return(
+    <p><AppContext.Consumer>{(context) => context.schoolName}</AppContext.Consumer></p>
+  )
+}
 
 class Header extends Component {
     constructor(props) {
@@ -9,7 +16,10 @@ class Header extends Component {
             <header className="hero">
                 <div className="hero-body">
                     <h1 className="title">All Notes</h1>
-                    <p className="subtitle">Alpha v0.1</p>
+                    <DisplaySchool></DisplaySchool>
+                    <p className="subtitle">Alpha v0.18</p>
+                    <Link to="/account"><button className="button is-primary">Account</button></Link>
+                    <Link to="/notebook"><button className="button is-primary">Notebook</button></Link>
                 </div>
             </header>
         )

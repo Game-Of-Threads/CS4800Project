@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Markdown } from 'react-showdown';
-import SearchBar from './SearchBar.jsx'
 import './github-markdown.css';
 
 //Pages are where notes are taken and marked up
@@ -50,7 +49,6 @@ class Page extends Component {
     render() {
         return (
             <div>
-                <SearchBar></SearchBar>
                 <p className="subtitle">{`${this.state.note.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
                 <div class="columns">
                     <div class="column">
