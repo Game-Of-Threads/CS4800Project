@@ -1095,7 +1095,7 @@ app.get('/api/hello', function(req, res) {
 app.get("/api/name", function(req, res, next) {
 
   var pg = require('pg');
-  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5001/DBV2";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {
