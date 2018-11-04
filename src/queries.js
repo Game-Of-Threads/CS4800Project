@@ -1105,6 +1105,7 @@ app.get("/api/name", function(req, res, next) {
   });
   console.log("Connected!");
   var sql = "SELECT acc_firstName FROM account WHERE acc_id = 1;";
+  console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
       console.log("error")
