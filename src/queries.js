@@ -1083,6 +1083,10 @@ var userDetails;
 
 const port = process.env.PORT || 5000;
 
+app.get('/api/', function(req, res) {
+  res.json('default');
+});
+
 app.get('/api/hello', function(req, res) {
   res.json('you did it');
 
