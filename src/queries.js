@@ -1091,6 +1091,7 @@ app.get("/name", function(req, res, next) {
       reject(err);
       client.end();
     } else {
+      console.log(result.rows[0])
       res.send(result.rows[0])
       client.end();
     }

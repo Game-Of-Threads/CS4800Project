@@ -28,19 +28,19 @@ class Notebook extends Component {
 
 
 
-  //   componentDidMount(){
-  //      let currentComponent = this;
-  //     fetch('ec2-18-224-199-80.us-east-2.compute.amazonaws.com/home/ec2-user/CS4800Project/src/queries.js/name')
-  //         .then(function(jsonData){
-  //           console.log(jsonData);
-  //             return JSON.stringify(jsonData);
-  //         })
-  //         .then(function(jsonStr){
-  //           console.log("IM HERERERERERERE");
-  //             console.log(jsonStr);
-  //
-  //         });
-  // }
+    componentDidMount(){
+       let currentComponent = this;
+      fetch('ec2-18-224-199-80.us-east-2.compute.amazonaws.com/home/ec2-user/CS4800Project/src/queries.js/name', {mode: 'cors'})
+          .then(function(err, jsonData){
+                console.log(jsonData);
+              return JSON.stringify(jsonData);
+          })
+          .then(function(jsonStr){
+            console.log("IM HERERERERERERE");
+              console.log(jsonStr);
+
+          });
+  }
 
   render() {
         return (
