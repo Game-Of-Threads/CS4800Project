@@ -4,6 +4,7 @@ import Page from './Page.jsx'
 class Notebook extends Component {
   constructor(props){
     super(props);
+
     this.state = {
       activeNote : 1,
       noteArray : [
@@ -23,6 +24,24 @@ class Notebook extends Component {
     })
 
   }
+
+
+
+
+  //   componentDidMount(){
+  //      let currentComponent = this;
+  //     fetch('ec2-18-224-199-80.us-east-2.compute.amazonaws.com/home/ec2-user/CS4800Project/src/queries.js/name')
+  //         .then(function(jsonData){
+  //           console.log(jsonData);
+  //             return JSON.stringify(jsonData);
+  //         })
+  //         .then(function(jsonStr){
+  //           console.log("IM HERERERERERERE");
+  //             console.log(jsonStr);
+  //
+  //         });
+  // }
+
   render() {
         return (
             <div className="columns">

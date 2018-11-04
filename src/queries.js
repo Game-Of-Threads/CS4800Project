@@ -1,3 +1,9 @@
+var express = require('express');
+var app = express();
+
+
+
+
 module.exports = {
   //   getAccId: getAccId,
   getAccFirstName: getAccFirstName,
@@ -54,49 +60,48 @@ module.exports = {
   createStuSec: createStuSec
 };
 
-
 /***********************************
  *   All Account related Methods   *
  ***********************************/
- function getAccFirstName(data, callback){
-   var pg = require('pg');
-   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-   var client = new pg.Client(conString);
-   client.connect(function(err) {
-     if (err) {
-       return console.error('could not connect to postgres', err);
-     }
-   });
-       var sql = "SELECT acc_firstName FROM account WHERE acc_id = " + data.toString() + ";";
-       client.query(sql, function(err, result){
-             if (err){
-               throw err;
-             }
-             //console.log(result.rows[0]); // good
-             return callback(result.rows[0]);
-             client.end();
-     });
- }
+function getAccFirstName(data, callback) {
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  var sql = "SELECT acc_firstName FROM account WHERE acc_id = " + data.toString() + ";";
+  client.query(sql, function(err, result) {
+    if (err) {
+      throw err;
+    }
+    //console.log(result.rows[0]); // good
+    return callback(result.rows[0]);
+    client.end();
+  });
+}
 
- function getAccLastName(data, callback){
-   var pg = require('pg');
-   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-   var client = new pg.Client(conString);
-   client.connect(function(err) {
-     if (err) {
-       return console.error('could not connect to postgres', err);
-     }
-   });
-       var sql = "SELECT acc_LastName FROM account WHERE acc_id = " + data.toString() + ";";
-       client.query(sql, function(err, result){
-             if (err){
-               throw err;
-             }
-             //console.log(result.rows[0]); // good
-             return callback(result.rows[0]);
-             client.end();
-     });
- }
+function getAccLastName(data, callback) {
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  var sql = "SELECT acc_LastName FROM account WHERE acc_id = " + data.toString() + ";";
+  client.query(sql, function(err, result) {
+    if (err) {
+      throw err;
+    }
+    //console.log(result.rows[0]); // good
+    return callback(result.rows[0]);
+    client.end();
+  });
+}
 
 function getAccEmail(data, callback) {
   var pg = require('pg');
@@ -1011,6 +1016,91 @@ function createStuSec(acc_id, sch_crs_sec_id) {
     client.end();
   });
 }
+
+
+
+
+
+
+
+
+
+var request = require("request");
+var userDetails;
+
+// function getFirstNamev2(data) {
+//   var pg = require('pg');
+//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+//   var client = new pg.Client(conString);
+//   client.connect(function(err) {
+//     if (err) {
+//       return console.error('could not connect to postgres', err);
+//     }
+//   });
+//   var sql = "SELECT acc_firstName FROM account WHERE acc_id = " + data.toString() + ";";
+//
+//   return new Promise(function(resolve, reject) {
+//     client.query(sql, function(err, result) {
+//       if (err) {
+//         reject(err);
+//         client.end();
+//       } else {
+//         resolve(result.rows[0])
+//         client.end();
+//       }
+//
+//     });
+//
+//   })
+//
+// }
+
+
+
+
+
+// client.connect(function(err) {
+//   if (err) {
+//     return console.error('could not connect to postgres', err);
+//   }
+// });
+//
+// app.get('/', function (req, res) {
+//     return res.send({ error: true, message: 'hello' })
+// });
+//
+// app.get('/todos', function (req, res) {
+//     client.query('SELECT * FROM account WHERE acc_id = 1', function (error, results, fields) {
+//         if (error) throw error;
+//         return res.send({ error: false, data: results, message: 'Todo list' });
+//     });
+// });
+
+app.get("/name", function(req, res, next) {
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  var sql = "SELECT acc_firstName FROM account WHERE acc_id = 1;";
+  client.query(sql, function(err, result) {
+    if (err) {
+      reject(err);
+      client.end();
+    } else {
+      res.send(result.rows[0])
+      client.end();
+    }
+});
+});
+
+
+
+
+
 
 
 // console.log('getAccLastName');
