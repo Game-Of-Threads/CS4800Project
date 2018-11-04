@@ -1076,7 +1076,20 @@ var userDetails;
 //     });
 // });
 
-app.get("/name", function(req, res, next) {
+
+// write to a new file named 2pac.txt
+
+
+
+const port = process.env.PORT || 5000;
+
+app.get('/api/hello', function(req, res) {
+  res.json('you did it');
+
+});
+
+app.get("/api/name", function(req, res, next) {
+
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
   var client = new pg.Client(conString);
@@ -1088,6 +1101,7 @@ app.get("/name", function(req, res, next) {
   var sql = "SELECT acc_firstName FROM account WHERE acc_id = 1;";
   client.query(sql, function(err, result) {
     if (err) {
+      console.log("error")
       reject(err);
       client.end();
     } else {
@@ -1099,7 +1113,7 @@ app.get("/name", function(req, res, next) {
 });
 
 
-
+app.listen(port, () => console.log(`Listening on port 5000`))
 
 
 
