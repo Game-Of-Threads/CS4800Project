@@ -25,7 +25,7 @@ class Notebook extends Component {
     }
     this.changeActiveNote = this.changeActiveNote.bind(this);
     let currentComponent = this;
-    fetch('http://ec2-18-223-32-101.us-east-2.compute.amazonaws.com:5000/api/name')
+    fetch('http://ec2-18-223-32-101.us-east-2.compute.amazonaws.com:5000/api/name?tagId=1')
       .then(function(response) {
         return response.json()
       })

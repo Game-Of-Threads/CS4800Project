@@ -1104,7 +1104,9 @@ app.get("/api/name", function(req, res, next) {
     }
   });
   console.log("Connected!");
-  var sql = "SELECT acc_firstName FROM account WHERE acc_id = 1;";
+  console.log(req.query.tagId);
+  var sql = "SELECT acc_firstName FROM account WHERE acc_id = " + req.query.tagId + ";";
+  //var sql = "SELECT acc_firstName FROM account WHERE acc_id = 1;";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
@@ -1121,128 +1123,3 @@ app.get("/api/name", function(req, res, next) {
 
 
 app.listen(port, () => console.log(`Listening on port 5000`))
-
-
-
-
-// console.log('getAccLastName');
-// getAccLastName(11);
-
-// console.log('getAccBirth');
-// getAccBirth(11);
-
-// console.log('getAccEmail');
-// getAccEmail(11);
-
-// console.log('getAccRating');
-// getAccRating(11);
-
-// console.log('getAccType');
-// getAccType(11);
-
-// console.log('getCrsName');
-// getCrsName(2);
-
-// console.log('getCrsNum');
-// getCrsNum(2);
-
-// console.log('getCrsTerm');
-// getCrsTerm(2);
-
-// console.log('getCrsDesc');
-// getCrsDesc(2)
-
-// console.log('getNoteDate');
-// getNoteDate(2)
-
-// console.log('getNoteRating');
-// getNoteRating(2)
-
-// console.log('getNoteAccId');
-// getNoteAccId(2);
-
-// console.log('getNoteType');
-// getNoteType(2);
-
-// console.log('getNoteText');
-// getNoteText(2);
-
-// console.log("Call Function");
-// getSchName(function (err, result) {
-
-// console.log('getSchName');
-// console.log(getSchName(1));
-
-// console.log('getSecNum');
-// getSecNum(1);
-//
-// console.log('getSecTime');
-// getSecTime(1);
-
-// console.log('getSecLoc');
-// getSecLoc(1);
-
-// console.log('alterAccFirstName');
-// alterAccFirstName(4, 'NewA ccount Name');
-
-// console.log('alterAccLastName');
-// alterAccLastName(4, 'New Last Name');
-
-// console.log('alterAccEmail');
-// alterAccEmail(4, 'new@new');
-
-// console.log('alterAccRating');
-// alterAccRating(4, 76457);
-
-// console.log('alterAccType');
-// alterAccType(4, 100);
-
-// console.log('alterCrsName');
-// alterCrsName(1, "New Name");
-
-// console.log('alterCrsNum');
-// alterCrsNum(1, 100000);
-
-// console.log('alterCrsDesc');
-// alterCrsDesc(1, "New desc");
-
-// console.log('alterCrsTerm');
-// alterCrsTerm(1, "new Term");
-
-// console.log('alterNoteFile');
-// alterNoteFile(1, "new Term");
-
-// console.log('alterNoteRating');
-// alterNoteRating(1, 987654);
-
-// console.log('alterNoteType');
-// alterNoteType(1, 333);
-
-// console.log('alterNoteText');
-// alterNoteText(1, "new Text");
-
-// console.log('alterSchName');
-// alterSchName(1, "new school name");
-
-// console.log('alterSecNum');
-// alterSecNum(1, 32132123);
-
-// console.log('alterSecTime');
-// alterSecTime(1, "new section time");
-
-// console.log('alterSecLoc');
-// alterSecLoc(1, "new section location");
-
-// console.log('createAcc');
-// createAcc("Drew", "Umlang", 1, 10, "dhumlang@cpp.edu");
-
-// console.log('createCrs');
-// createCrs("CS", 4800, "Software Engineering", "Fall18");
-
-
-// var stuff_i_want = '';
-//
-// getAccLastName(1, function(result){
-//   stuff_i_want = result;
-//   console.log(stuff_i_want);
-// });
