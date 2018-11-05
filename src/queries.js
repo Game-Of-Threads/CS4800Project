@@ -970,16 +970,7 @@ const port = process.env.PORT || 5000;
 
 
 
-var pg = require('pg');
-var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-var client = new pg.Client(conString);
-console.log("About to Connect!");
-client.connect(function(err) {
-  if (err) {
-    return console.error('could not connect to postgres', err);
-  }
-});
-console.log("Connected!");
+
 
 
 app.get('/api/', function(req, res) {
@@ -992,6 +983,17 @@ app.get('/api/hello', function(req, res) {
 });
 
 app.get("/api/firstName", function(req, res, next) {
+
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  console.log("About to Connect!");
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  console.log("Connected!");
   console.log(req.query.tagId);
   var sql = "SELECT acc_firstName FROM account WHERE acc_id = " + req.query.tagId + ";";
   //var sql = "SELECT acc_firstName FROM account WHERE acc_id = 1;";
@@ -999,6 +1001,7 @@ app.get("/api/firstName", function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log("error")
+      reject(err);
       client.end();
     } else {
       console.log(result.rows[0])
@@ -1009,6 +1012,17 @@ app.get("/api/firstName", function(req, res, next) {
 });
 
 app.get("/api/lastName", function(req, res, next) {
+
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  console.log("About to Connect!");
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  console.log("Connected!");
   console.log(req.query.tagId);
   var sql = "SELECT acc_LastName FROM account WHERE acc_id = " + req.query.tagId + ";";
   //var sql = "SELECT acc_firstName FROM account WHERE acc_id = 1;";
@@ -1016,6 +1030,7 @@ app.get("/api/lastName", function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log("error")
+      reject(err);
       client.end();
     } else {
       console.log(result.rows[0])
