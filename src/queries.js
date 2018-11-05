@@ -999,7 +999,6 @@ app.get("/api/firstName", function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log("error")
-      reject(err);
       client.end();
     } else {
       console.log(result.rows[0])
@@ -1017,7 +1016,6 @@ app.get("/api/lastName", function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log("error")
-      reject(err);
       client.end();
     } else {
       console.log(result.rows[0])
