@@ -4,134 +4,92 @@ var request = require("request");
 var userDetails;
 const port = process.env.PORT || 5000;
 
+app.get('/api/', function(req, res) {
+  res.json('default');
+});
+
+app.get("/api/genericGetCall", function(req, res, next) {
+
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  console.log("About to Connect!");
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  console.log("Connected!");
+  var sql = "SELECT " + req.query.getColumn + " FROM " + req.query.table + " WHERE " + req.query.compColumn + " = " + req.query.val + ";";
+  console.log("Query being sent to the db" + sql);
+  client.query(sql, function(err, result) {
+    if (err) {
+      console.log("error")
+      reject(err);
+      client.end();
+    } else {
+      console.log(result.rows[0])
+      res.send(result.rows[0])
+      client.end();
+    }
+  });
+});
+
+app.get("/api/getAllAccInfo", function(req, res, next) {
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  console.log("About to Connect!");
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  console.log("Connected!");
+  var sql = "SELECT * FROM account WHERE acc_Email = " + req.query.email + ";";
+  console.log("Query being sent to the db" + sql);
+  client.query(sql, function(err, result) {
+    if (err) {
+      console.log("error")
+      reject(err);
+      client.end();
+    } else {
+      console.log(result.rows[0])
+      res.send(result.rows[0])
+      client.end();
+    }
+  });
+});
+
+app.get('/api/updateGeneric', function(req, res, next) {
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  console.log("About to Connect!");
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  console.log("Connected!");
+  var sql = "UPDATE " + req.query.table + " SET " + req.query.generalCol + " = " + req.query.newVal + " WHERE " + req.query.compCol + " = " + req.query.compVal + ";";
+  console.log("Query being sent to the db" + sql);
+  client.query(sql, function(err, result) {
+    if (err) {
+      console.log("error")
+      reject(err);
+      client.end();
+    } else {
+      console.log(result.rows[0])
+      res.send(sql)
+      client.end();
+    }
+  });
+});
 
 
-// /***********************************
-//  *   All Account related Methods   *
-//  ***********************************/
-// function getAccFirstName(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//   var sql = "SELECT acc_firstName FROM account WHERE acc_id = " + data.toString() + ";";
-//   client.query(sql, function(err, result) {
-//     if (err) {
-//       throw err;
-//     }
-//     //console.log(result.rows[0]); // good
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getAccLastName(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//   var sql = "SELECT acc_LastName FROM account WHERE acc_id = " + data.toString() + ";";
-//   client.query(sql, function(err, result) {
-//     if (err) {
-//       throw err;
-//     }
-//     //console.log(result.rows[0]); // good
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getAccEmail(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT acc_email FROM account WHERE acc_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getAccBirth(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT acc_Birth FROM account WHERE acc_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     console.log(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getAccRating(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT acc_Rating FROM account WHERE acc_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     console.log(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getAccType(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT acc_Type FROM account WHERE acc_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     console.log(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
+app.listen(port, () => console.log(`Listening on port 5000`))
+
 // function alterAccFirstName(accId, newName) {
 //   var pg = require('pg');
 //   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
@@ -245,90 +203,7 @@ const port = process.env.PORT || 5000;
 //     client.end();
 //   });
 // }
-//
-// /***********************************
-//  *    All Course related Methods   *
-//  ***********************************/
-// function getCrsName(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT crs_name FROM course WHERE crs_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getCrsNum(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT crs_num FROM course WHERE crs_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getCrsDesc(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT crs_desc FROM course WHERE crs_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getCrsTerm(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT crs_term FROM course WHERE crs_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
+
 // function alterCrsName(crsId, newName) {
 //   var pg = require('pg');
 //   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
@@ -424,130 +299,7 @@ const port = process.env.PORT || 5000;
 //     client.end();
 //   });
 // }
-//
-// /***********************************
-//  *     All Note related Methods    *
-//  ***********************************/
-// function getNoteFile(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT note_file FROM note WHERE note_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getNoteDate(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT note_date FROM note WHERE note_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getNoteRating(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT note_rating FROM note WHERE note_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getNoteAccId(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT acc_id FROM note WHERE note_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getNoteType(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT note_type FROM note WHERE note_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
-// function getNoteText(data, callback) {
-//   var pg = require('pg');
-//   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-//   var client = new pg.Client(conString);
-//   client.connect(function(err) {
-//     if (err) {
-//       return console.error('could not connect to postgres', err);
-//     }
-//   });
-//
-//   var test = "SELECT note_text FROM note WHERE note_id = " + data.toString() + ";";
-//   client.query(test, function(err, result) {
-//     if (err) {
-//       return console.error('error running query', err);
-//     }
-//     return callback(result.rows[0]);
-//     client.end();
-//   });
-// }
-//
+
 // // ATM the noteFile will be entered as a string but will be patched
 // // soon to enter it as a bytea so that postgres can read it
 // function alterNoteFile(data, newFile) {
@@ -966,79 +718,3 @@ const port = process.env.PORT || 5000;
 //
 //
 //
-
-
-
-
-
-
-
-app.get('/api/', function(req, res) {
-  res.json('default');
-});
-
-app.get('/api/hello', function(req, res) {
-  res.json('you did it');
-
-});
-
-app.get("/api/firstName", function(req, res, next) {
-
-  var pg = require('pg');
-  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-  var client = new pg.Client(conString);
-  console.log("About to Connect!");
-  client.connect(function(err) {
-    if (err) {
-      return console.error('could not connect to postgres', err);
-    }
-  });
-  console.log("Connected!");
-  console.log(req.query.tagId);
-  var sql = "SELECT acc_firstName FROM account WHERE acc_id = " + req.query.tagId + ";";
-  //var sql = "SELECT acc_firstName FROM account WHERE acc_id = 1;";
-  console.log("Query being sent to the db" + sql);
-  client.query(sql, function(err, result) {
-    if (err) {
-      console.log("error")
-      reject(err);
-      client.end();
-    } else {
-      console.log(result.rows[0])
-      res.send(result.rows[0])
-      client.end();
-    }
-});
-});
-
-app.get("/api/lastName", function(req, res, next) {
-
-  var pg = require('pg');
-  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
-  var client = new pg.Client(conString);
-  console.log("About to Connect!");
-  client.connect(function(err) {
-    if (err) {
-      return console.error('could not connect to postgres', err);
-    }
-  });
-  console.log("Connected!");
-  console.log(req.query.tagId);
-  var sql = "SELECT acc_LastName FROM account WHERE acc_id = " + req.query.tagId + ";";
-  //var sql = "SELECT acc_firstName FROM account WHERE acc_id = 1;";
-  console.log("Query being sent to the db" + sql);
-  client.query(sql, function(err, result) {
-    if (err) {
-      console.log("error")
-      reject(err);
-      client.end();
-    } else {
-      console.log(result.rows[0])
-      res.send(result.rows[0])
-      client.end();
-    }
-});
-});
-
-
-app.listen(port, () => console.log(`Listening on port 5000`))

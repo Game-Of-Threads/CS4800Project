@@ -25,7 +25,8 @@ class Notebook extends Component {
     }
     this.changeActiveNote = this.changeActiveNote.bind(this);
     let currentComponent = this;
-    fetch('http://ec2-18-223-32-101.us-east-2.compute.amazonaws.com:5000/api/firstName?tagId=1')
+
+    fetch('http://localhost:5000/api/genericGetCall?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
       .then(function(response) {
         return response.json()
       })
@@ -33,13 +34,19 @@ class Notebook extends Component {
         console.log(response);
       });
 
-      fetch('http://ec2-18-223-32-101.us-east-2.compute.amazonaws.com:5000/api/lastName?tagId=1')
-        .then(function(response) {
-          return response.json()
-        })
-        .then((response) => {
-          console.log(response);
-        });
+    fetch('http://localhost:5000/api/updateGeneric?table=account&generalCol=acc_firstName&newVal="Mara"&compCol=acc_id&compVal=1')
+      .then(function(response) {
+      })
+      .then((response) => {
+      });
+
+    // fetch('http://ec2-18-223-32-101.us-east-2.compute.amazonaws.com:5000/api/lastName?accId=1')
+    //   .then(function(response) {
+    //     return response.json()
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //   });
 
   }
 
