@@ -34,7 +34,7 @@ class Notebook extends Component {
         console.log(response);
       });
 
-    fetch('http://localhost:5000/api/updateGeneric?table=account&generalCol=acc_firstName&newVal="Mara"&compCol=acc_id&compVal=1')
+    fetch("http://localhost:5000/api/updateGeneric?table=account&generalCol=acc_firstName&newVal='Mara'&compCol=acc_id&compVal=1")
       .then(function(response) {
       })
       .then((response) => {
