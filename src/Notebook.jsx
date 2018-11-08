@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Page from './Page.jsx'
+import AppContext from './AppProvider.jsx'
 
 class Notebook extends Component {
   constructor(props){
@@ -36,6 +37,7 @@ class Notebook extends Component {
         )
     }
   }
+Notebook.contextType = AppContext;
 
 class NoteList extends Component {
   constructor(props){
@@ -54,6 +56,7 @@ class NoteList extends Component {
           <nav className="panel">
               <div className="panel-heading">Notes</div>
               {noteList}
+              <button onClick={this.createNewNote}>+</button>
           </nav>
       )
   }

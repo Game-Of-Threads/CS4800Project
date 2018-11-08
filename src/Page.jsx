@@ -52,7 +52,7 @@ class Page extends Component {
                 <p className="subtitle">{`${this.state.note.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
                 <div class="columns">
                     <div class="column">
-                        <textarea id="data" className="textarea" value={this.state.note.data} onChange={this.updateState}></textarea>
+                        <textarea id="data" className="textarea" defaultValue={this.state.note.data} onChange={this.updateState}></textarea>
                         <br />
                         <button className="button" onClick={this.save}>Save</button>
                     </div>
