@@ -46,17 +46,45 @@ class Page extends Component {
         this.setState({ data: document.getElementById("data").value });
         console.log("Note saved.");
     }
+    addNote() {
+      var axios = require("axios");
+      axios.get('http://localhost:5000/api/createNote', {
+        params: {
+          rating: document.getElementById("rating").value,
+          accId: document.getElementById("accid").value,
+          noteText: document.getElementById("notetext").value,
+          secID: document.getElementById("secid").value
+        }
+      }).then(function (response) {
+        console.log("addNote successfully saved the notes");
+        console.log(response);
+      }).catch(function(error) {
+        console.log("It didn't work");
+        console.log(error);
+      });
+    }
     render() {
         return (
             <div>
                 <p className="subtitle">{`${this.state.note.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
-                <div class="columns">
-                    <div class="column">
-                        <textarea id="data" className="textarea" value={this.state.note.data} onChange={this.updateState}></textarea>
+                <p>Rating:</p>
+                <input type="number" min="1" max="5" id="rating" /><br />
+                <p>Account ID:</p>
+                <input type="number" id="accid" min="1" /><br />
+                <p>Section ID:</p>
+                <input type="number" id="secid" min="1" /><br />
+                <p>Body:</p>
+                <textarea className="textarea" rows="5" id="notetext">
+                </textarea>
+                <button className="button" onClick={this.addNote}>Add Notes</button><br /><br />
+                <div className="columns">
+                    <div className="column">
+                        <textarea id="data" className="textarea" value={this.state.note.data} onChange={this.updateState}>
+                        </textarea>
                         <br />
                         <button className="button" onClick={this.save}>Save</button>
                     </div>
-                    <div class="column">
+                    <div className="column">
                         <span className="markdown-body">
                             <Markdown markup={this.state.note.data} />
                         </span>

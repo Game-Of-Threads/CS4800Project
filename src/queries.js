@@ -246,7 +246,7 @@ app.get('/api/createNote', function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log("error")
-      reject(err);
+      Promise.reject(err);
       client.end();
     } else {
       console.log(result.rows[0])

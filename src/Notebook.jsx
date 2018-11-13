@@ -120,6 +120,9 @@ class NoteList extends Component {
       id = {
         i++
       }
+      key = {
+        i
+      }
       data = {
         object.data
       }
