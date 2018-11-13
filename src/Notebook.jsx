@@ -26,26 +26,44 @@ class Notebook extends Component {
     this.changeActiveNote = this.changeActiveNote.bind(this);
     let currentComponent = this;
 
-    fetch('http://localhost:5000/api/genericGetCall?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
-      .then(function(response) {
-        return response.json()
-      })
-      .then((response) => {
-        console.log(response);
-      });
-
-    fetch("http://localhost:5000/api/updateGeneric?table=account&generalCol=acc_firstName&newVal='Mara'&compCol=acc_id&compVal=1")
-      .then(function(response) {
-      })
-      .then((response) => {
-      });
-
+    // fetch('http://localhost:5000/api/genericGetCall?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
+    //   .then(function(response) {
+    //     return response.json()
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //   });
+    //
+    // fetch("http://localhost:5000/api/updateGenericString?table=account&generalCol=acc_firstName&newStringVal=Mara&compCol=acc_id&compVal=1")
+    //   .then(function(response) {
+    //   })
+    //   .then((response) => {
+    //   });
+    //
+    // fetch("http://localhost:5000/api/createAccount?firstName=New&lastName=user&email=testEmail@cpp.edu&accType=1")
+    //   .then(function(response) {
+    //   })
+    //   .then((response) => {
+    //   });
+    //
     // fetch('http://ec2-18-223-32-101.us-east-2.compute.amazonaws.com:5000/api/lastName?accId=1')
     //   .then(function(response) {
     //     return response.json()
     //   })
     //   .then((response) => {
     //     console.log(response);
+    //   });
+    //
+    // fetch("http://localhost:5000/api/createCourse?crsName=CS4800&crsDesc=Software Engineering&crsTerm=Fall2018")
+    //   .then(function(response) {
+    //   })
+    //   .then((response) => {
+    //   });
+    //
+    // fetch("http://localhost:5000/api/createNote?rating=0&accId=1&noteText=I hope this test note works.&secID=0")
+    //   .then(function(response) {
+    //   })
+    //   .then((response) => {
     //   });
 
   }

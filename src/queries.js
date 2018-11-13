@@ -61,7 +61,8 @@ app.get("/api/getAllAccInfo", function(req, res, next) {
   });
 });
 
-app.get('/api/updateGeneric', function(req, res, next) {
+// Will update a value in the database with a string
+app.get('/api/updateGenericString', function(req, res, next) {
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
   var client = new pg.Client(conString);
@@ -72,7 +73,175 @@ app.get('/api/updateGeneric', function(req, res, next) {
     }
   });
   console.log("Connected!");
-  var sql = "UPDATE " + req.query.table + " SET " + req.query.generalCol + " = " + req.query.newVal + " WHERE " + req.query.compCol + " = " + req.query.compVal + ";";
+  var sql = "UPDATE " + req.query.table + " SET " + req.query.generalCol + " = '" + req.query.newStringVal + "' WHERE " + req.query.compCol + " = " + req.query.compVal + ";";
+  console.log("Query being sent to the db" + sql);
+  client.query(sql, function(err, result) {
+    if (err) {
+      console.log("error")
+      reject(err);
+      client.end();
+    } else {
+      console.log(result.rows[0])
+      res.send(sql)
+      client.end();
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+// Will update a value in the database with a number value
+app.get('/api/updateGenericNumber', function(req, res, next) {
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  console.log("About to Connect!");
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  console.log("Connected!");
+  var sql = 'UPDATE ' + req.query.table + ' SET ' + req.query.generalCol + ' = ' + req.query.newStringVal + ' WHERE ' + req.query.compCol + ' = ' + req.query.compVal + ';';
+  console.log("Query being sent to the db" + sql);
+  client.query(sql, function(err, result) {
+    if (err) {
+      console.log("error")
+      reject(err);
+      client.end();
+    } else {
+      console.log(result.rows[0])
+      res.send(sql)
+      client.end();
+    }
+  });
+});
+
+
+
+
+
+
+
+app.get('/api/createAccount', function(req, res, next) {
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  console.log("About to Connect!");
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  console.log("Connected!");
+  var sql = "INSERT INTO account(acc_firstName, acc_lastName, acc_email, acc_type) VALUES ('" + req.query.firstName + "','" + req.query.lastName + "','" + req.query.email + "'," +  req.query.accType + ');';
+  console.log("Query being sent to the db" + sql);
+  client.query(sql, function(err, result) {
+    if (err) {
+      console.log("error")
+      reject(err);
+      client.end();
+    } else {
+      console.log(result.rows[0])
+      res.send(sql)
+      client.end();
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.get('/api/createAccount', function(req, res, next) {
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  console.log("About to Connect!");
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  console.log("Connected!");
+  var sql = "INSERT INTO account(acc_firstName, acc_lastName, acc_email, acc_type) VALUES ('" + req.query.firstName + "','" + req.query.lastName + "','" + req.query.email + "'," +  req.query.accType + ');';
+  console.log("Query being sent to the db" + sql);
+  client.query(sql, function(err, result) {
+    if (err) {
+      console.log("error")
+      reject(err);
+      client.end();
+    } else {
+      console.log(result.rows[0])
+      res.send(sql)
+      client.end();
+    }
+  });
+});
+
+
+
+
+
+
+app.get('/api/createCourse', function(req, res, next) {
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  console.log("About to Connect!");
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  console.log("Connected!");
+  var sql = "INSERT INTO course(crs_name, crs_desc, crs_term) VALUES ('" + req.query.crsName + "','" + req.query.crsDesc + "','" +  req.query.crsTerm + "');";
+  console.log("Query being sent to the db" + sql);
+  client.query(sql, function(err, result) {
+    if (err) {
+      console.log("error")
+      reject(err);
+      client.end();
+    } else {
+      console.log(result.rows[0])
+      res.send(sql)
+      client.end();
+    }
+  });
+});
+
+
+
+
+
+
+
+app.get('/api/createNote', function(req, res, next) {
+  var pg = require('pg');
+  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var client = new pg.Client(conString);
+  console.log("About to Connect!");
+  client.connect(function(err) {
+    if (err) {
+      return console.error('could not connect to postgres', err);
+    }
+  });
+  console.log("Connected!");
+  var sql = "INSERT INTO note(note_rating, acc_id, note_text, sch_crs_sec_id) VALUES (" + req.query.rating + "," + req.query.accId + ",'" +  req.query.noteText + "', " + req.query.secID + ");";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
