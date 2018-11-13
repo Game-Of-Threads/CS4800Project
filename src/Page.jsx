@@ -68,11 +68,11 @@ class Page extends Component {
             <div>
                 <p className="subtitle">{`${this.state.note.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
                 <p>Rating:</p>
-                <input type="number" min="1" max="5" id="rating" /><br />
+                <input className="input" type="number" min="1" max="5" id="rating" /><br />
                 <p>Account ID:</p>
-                <input type="number" id="accid" min="1" /><br />
+                <input className="input" type="number" id="accid" min="1" /><br />
                 <p>Section ID:</p>
-                <input type="number" id="secid" min="1" /><br />
+                <input className="input" type="number" id="secid" min="1" /><br />
                 <p>Body:</p>
                 <textarea className="textarea" rows="5" id="notetext">
                 </textarea>
