@@ -10,7 +10,7 @@ coverage
 build
 
 # vscode
-src/.vscode
+.vscode
 
 # misc
 .DS_Store

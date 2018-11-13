@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import FileUploader from './FileUploader.jsx'
 import { Markdown } from 'react-showdown';
 import './github-markdown.css';
+
 
 //Pages are where notes are taken and marked up
 class Page extends Component {
@@ -74,9 +76,16 @@ class Page extends Component {
                 <p>Section ID:</p>
                 <input className="input" type="number" id="secid" min="1" /><br />
                 <p>Body:</p>
-                <textarea className="textarea" rows="5" id="notetext">
-                </textarea>
-                <button className="button" onClick={this.addNote}>Add Notes</button><br /><br />
+                <div className="columns">
+                    <div className="column">
+                        <textarea className="textarea" rows="5" id="notetext"></textarea>
+                    </div>
+                    <button className="button" onClick={this.addNote}>Add Notes</button><br /><br />
+                    <div className="column">
+                        <FileUploader></FileUploader>
+                    </div>
+                </div>
+                
                 <div className="columns">
                     <div className="column">
                         <textarea id="data" className="textarea" value={this.state.note.data} onChange={this.updateState}>
