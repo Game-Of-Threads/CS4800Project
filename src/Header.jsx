@@ -15,7 +15,7 @@ class Header extends Component {
         return (
             <header className="hero">
                 <div className="hero-body">
-                    <h1 className="title">All Notes</h1>
+                    <Link to="/home"><h1 className="title" style={{color: 'blue'}}>All Notes</h1></Link>
                     <DisplaySchool></DisplaySchool>
                     <p className="subtitle">Alpha v0.18</p>
                     <Link to="/account"><button className="button is-primary">Account</button></Link>

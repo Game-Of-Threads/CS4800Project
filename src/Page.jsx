@@ -17,7 +17,7 @@ class Page extends Component {
             courseName: "" || "Unnamed Course",
             schoolName: "" || "Unnamed School",
             saved: true,
-            note : this.props.note,
+            note: this.props.note,
             AStimer: 0, //autosave timer, resets to 5000 after every change
         }
         // NOTE:
@@ -28,7 +28,7 @@ class Page extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      this.setState({ note: nextProps.note});
+        this.setState({ note: nextProps.note });
     }
     updateState(e) {
         e.preventDefault();
@@ -49,21 +49,21 @@ class Page extends Component {
         console.log("Note saved.");
     }
     addNote() {
-      var axios = require("axios");
-      axios.get('http://localhost:5000/api/createNote', {
-        params: {
-          rating: document.getElementById("rating").value,
-          accId: document.getElementById("accid").value,
-          noteText: document.getElementById("notetext").value,
-          secID: document.getElementById("secid").value
-        }
-      }).then(function (response) {
-        console.log("addNote successfully saved the notes");
-        console.log(response);
-      }).catch(function(error) {
-        console.log("It didn't work");
-        console.log(error);
-      });
+        var axios = require("axios");
+        axios.get('http://localhost:5000/api/createNote', {
+            params: {
+                rating: document.getElementById("rating").value,
+                accId: document.getElementById("accid").value,
+                noteText: document.getElementById("notetext").value,
+                secID: document.getElementById("secid").value
+            }
+        }).then(function (response) {
+            console.log("addNote successfully saved the notes");
+            console.log(response);
+        }).catch(function (error) {
+            console.log("It didn't work");
+            console.log(error);
+        });
     }
     render() {
         return (
@@ -79,13 +79,12 @@ class Page extends Component {
                 <div className="columns">
                     <div className="column">
                         <textarea className="textarea" rows="5" id="notetext"></textarea>
+                        <button className="button has-text-centered" onClick={this.addNote}>Add Notes</button><br /><br />
                     </div>
-                    <button className="button" onClick={this.addNote}>Add Notes</button><br /><br />
                     <div className="column">
                         <FileUploader></FileUploader>
                     </div>
                 </div>
-                
                 <div className="columns">
                     <div className="column">
                         <textarea id="data" className="textarea" value={this.state.note.data} onChange={this.updateState}>

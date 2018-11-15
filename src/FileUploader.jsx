@@ -30,39 +30,38 @@ class FileUploader extends Component {
             border: '1px solid #eaeaea',
             marginBottom: 8,
             marginRight: 4,
-            width: 200,
-            height: 200,
-            padding: 4,
+            width: 128,
+            height: 128,
+            padding: 1,
             boxSizing: 'border-box'
         };
+
+        const dropzoneStyle = {
+            width: 128,
+            height: 140,
+            border: '2px dashed #555'
+        }
 
         const { files } = this.state;
 
         const preview = files.map(file => (
             <div style={previewContainer}>
-                <img
-                    src={file.preview}
-                />
+                <img src={file.preview} />
             </div>
         ));
 
         return (
-            <section>
-                <div className="columns">
-                    <div className="column">
-                        <div className="dropzone">
-                            <Dropzone
-                                accept="image/*"
-                                onDrop={this.onDrop.bind(this)}
-                            > drop images here...
-                            </Dropzone>
-                        </div>
-                    </div>
-                    <div className="column">
-                        {preview}
-                    </div>
+            <div>
+                <div className="dropzone has-text-centered">
+                    <Dropzone
+                        accept="image/*"
+                        onDrop={this.onDrop.bind(this)}
+                        style={dropzoneStyle}
+                    > drop images here...
+                    </Dropzone>
                 </div>
-            </section>
+                {preview}
+            </div>
         );
     }
 }

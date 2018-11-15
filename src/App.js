@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './bulma.css';
+import HomePage from './HomePage.jsx'
 import LandingPage from './LandingPage.jsx'
 import LoginComponent from './LoginComponent.jsx'
 import Notebook from './Notebook.jsx'
@@ -18,6 +19,7 @@ class App extends Component {
             <main className="container">
                 <Switch>
                     <Route exact path="/" component={LandingPage} />
+                    <Route path="/home" component={HomePage} />
                     <Route path="/login" component={LoginComponent} />
                     <Route path="/notebook" component={Notebook} />
                     <Route path="/account" component={UserPreferences} />

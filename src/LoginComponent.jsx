@@ -28,8 +28,16 @@ class LoginComponent extends Component {
     }
 
     render() {
+
+        const center = {
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            height: '100vh'         
+        }
+
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <div style={center}>
                 <div className="container">
                     <h1 className="title has-text-centered"><font size="7">All Notes</font></h1>
                     <div className="box">
