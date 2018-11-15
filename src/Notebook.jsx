@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import Header from './Header.jsx'
 import Page from './Page.jsx'
 
 class Notebook extends Component {
@@ -74,18 +75,21 @@ class Notebook extends Component {
 
     render() {
         return (
-            <div className="columns">
-                <div className="column is-one-fifth" >
-                    <NoteList 
-                        noteArray={this.state.noteArray}
-                        changeActiveNote={this.changeActiveNote}
-                    > </NoteList>
-                </div>
-                <div className="column">
-                    <Page note={
-                        this.state.noteArray[this.state.activeNote]
-                    }
-                    > </Page>
+            <div>
+                <Header></Header>
+                <div className="columns">
+                    <div className="column is-one-fifth" >
+                        <NoteList
+                            noteArray={this.state.noteArray}
+                            changeActiveNote={this.changeActiveNote}
+                        > </NoteList>
+                    </div>
+                    <div className="column">
+                        <Page note={
+                            this.state.noteArray[this.state.activeNote]
+                        }
+                        > </Page>
+                    </div>
                 </div>
             </div>
         )
