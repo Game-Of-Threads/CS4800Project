@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Markdown } from 'react-showdown';
 import './github-markdown.css';
+import AppContext from './AppProvider.jsx'
 
 //Pages are where notes are taken and marked up
 class Page extends Component {
@@ -48,21 +49,25 @@ class Page extends Component {
     }
     render() {
         return (
-            <div>
-                <p className="subtitle">{`${this.state.note.title} from ${this.state.courseName} at ${this.state.schoolName}`}</p>
-                <div class="columns">
-                    <div class="column">
-                        <textarea id="data" className="textarea" value={this.state.note.data} onChange={this.updateState}></textarea>
-                        <br />
-                        <button className="button" onClick={this.save}>Save</button>
-                    </div>
-                    <div class="column">
-                        <span className="markdown-body">
-                            <Markdown markup={this.state.note.data} />
-                        </span>
-                    </div>
-                </div>
-            </div>
+          <AppContext.Consumer>
+            {(context) => (
+              <div>
+                  <p className="subtitle"><input type="text" className="input" placeholder={this.state.note.title}/> {`from ${this.state.courseName} at ${context.user.schoolName}`}</p>
+                  <div className="columns">
+                      <div className="column">
+                          <textarea id="data" className="textarea" value={this.state.note.data} rows="20" onChange={this.updateState}></textarea>
+                          <br />
+                          <button className="button" onClick={this.save}>Save</button>
+                      </div>
+                      <div className="column">
+                          <span className="markdown-body">
+                              <Markdown markup={this.state.note.data} />
+                          </span>
+                      </div>
+                  </div>
+              </div>
+            )}
+          </AppContext.Consumer>
         )
     }
 }
