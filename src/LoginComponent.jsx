@@ -8,11 +8,8 @@ class LoginComponent extends Component {
             message: "", // Multi-purpose message to be displayed to the user, blank by default
             messageStatus: "black", //color of the message
             // NOTE: "success" for green "warning" for yellow "danger" for red
-            username: "",
-            password: ""
         }
         this.updateState = this.updateState.bind(this);
-        this.attemptLogin = this.attemptLogin.bind(this);
     }
 
     updateState(e) {
@@ -23,18 +20,12 @@ class LoginComponent extends Component {
             [e.target.id]: e.target.value
         })
     }
-
-    attemptLogin(e) {
-    }
-
     render() {
         return (
             <div className="container">
                 <div className="box">
-                    <label className="label">Email</label>
-                    <input type="text" className="input" id="username" onChange={this.updateState} />
-                    <label className="label"><br></br>Password</label>
-                    <input type="password" className="input" id="password" onChange={this.updateState} />
+                    <h1 className="title is-2">Get Started with Bronco Notes!</h1>
+                    <div class="g-signin2" data-onsuccess="onSignIn">Sign in w/ Googs</div>
                     <label className={`has-text-${this.state.messageStatus}`}> {this.state.message}<br></br></label>
                     <br></br>
                     <Link to="/notebook"><button className="button is-primary" onClick={this.attemptLogin}>Login</button></Link>
