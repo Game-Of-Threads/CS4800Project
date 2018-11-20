@@ -34,16 +34,20 @@ class Notebook extends Component {
     this.setState({activeNote: newNoteIndex})
   }
 
+  updateNoteTitle(){
+    var index = this.state.activeNote;
+  }
+
   render() {
     return (
       //NOTE: Wrapping entire elements in the AppContext.Consumer allows the context to be accessed incredibly easily without reinstancing the context
       <AppContext.Consumer>
         {(context) =>
           <div className = "columns">
-              <div className = "column is-one-fifth" >
-                <NoteList noteArray={context.user.noteArray} changeActiveNote = {this.changeActiveNote}> </NoteList>
+              <div className = "column is-one-fifth">
+                <NoteList noteArray={context.user.noteArray} changeActiveNote={this.changeActiveNote}> </NoteList>
               </div >
-                <div className = "column"><Page note={context.user.noteArray[this.state.activeNote]}></Page>
+                <div className = "column"><Page note={context.user.noteArray[this.state.activeNote]} updateNoteName={this.updateNoteName}></Page>
               </div>
           </div>
       }
@@ -74,7 +78,7 @@ class NoteList extends Component {
 
   render() {
      var noteList = this.state.noteArray.map((object, index) => <div className = "panel-block"
-                  id={index} key={index} data = {object.data} onClick={this.changeNote}> {object.title}</div>)
+                  id={index} key={index} data = {object.data || "Loading"} onClick={this.changeNote}> {object.title || "Loading"}</div>)
      return (
         <AppContext.Consumer>
           {(context) => (

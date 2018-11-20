@@ -8,9 +8,6 @@ class Page extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.note.data,
-            date: "",
-            score: 1,
             author: this.props.username || "Anonymous",
             title: this.props.note.title || "Untitled Note",
             courseName: "" || "Unnamed Course",
@@ -22,7 +19,6 @@ class Page extends Component {
         // NOTE:
         //Every function must be bound to the component through these statements
         this.updateState = this.updateState.bind(this);
-        this.save = this.save.bind(this);
         this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     }
 
@@ -32,32 +28,27 @@ class Page extends Component {
     updateState(e) {
         e.preventDefault();
         this.setState({
-            [e.target.id]: e.target.value,
-            saved: false,
-            AStimer: 3000 //3 seconds of inactivity before autosaving
+            note : {
+              title : e.target.value,
+              data : this.state.note.data,
+              [e.target.id]: e.target.value,
+              score : this.state.note.score,
+              id : this.state.note.id,
+
+            },
         })
-    }
-    autosave() {
-        if (this.state.AStimer === 0) {
-            this.save()
-        }
-    }
-    save() {
-        //saves the note, should autosave as development goes on
-        this.setState({ data: document.getElementById("data").value });
-        console.log("Note saved.");
     }
     render() {
         return (
           <AppContext.Consumer>
             {(context) => (
               <div>
-                  <p className="subtitle"><input type="text" className="input" placeholder={this.state.note.title}/> {`from ${this.state.courseName} at ${context.user.schoolName}`}</p>
+                  <p className="subtitle"><input type="text" className="input" onChange={this.updateState} placeholder={this.state.note.title}/> {`from ${this.state.courseName} at ${context.user.schoolName}`}</p>
                   <div className="columns">
                       <div className="column">
                           <textarea id="data" className="textarea" value={this.state.note.data} rows="20" onChange={this.updateState}></textarea>
                           <br />
-                          <button className="button" onClick={this.save}>Save</button>
+                          <button className="button" onClick={() => context.saveNote(this.state.note)}>Save</button>
                       </div>
                       <div className="column">
                           <span className="markdown-body">

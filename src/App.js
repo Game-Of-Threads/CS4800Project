@@ -18,30 +18,55 @@ class App extends Component {
       noteArray: [
         {
           title: "Midterm Review",
+          id: 0,
           data: "## Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in officia deserunt mollit anim id est laborum."
         }, {
           title: "djksahdfkjdlsf",
+          id : 1,
           data: "Test 2"
         }, {
           title: "Im very stressed",
+          id: 2,
           data: "Heh, nothing personell kid"
         }
         , {
           title : "Success",
+          id: 3,
           data  : "It worked!"
         }
       ]
     },
     addNote : () => {
-      console.log(this.state.user.noteArray)
-      var newArray = this.state.user.noteArray.concat({title: "Test", data: "Help me"});
-      console.log(newArray);
+      var newArray = this.state.user.noteArray.concat({title: "New Note", data: "", id: this.state.user.noteArray.length+1});
       this.setState({
         user : {
+          name : this.state.user.name,
+          schoolName : this.state.user.schoolName,
+          major : this.state.user.major,
+          reputation : this.state.user.reputation,
           noteArray : newArray
         }
       })
+    },
+
+    saveNote : (note) => {
+      var newArray = this.state.user.noteArray.map((item) => {
+        if(item.id === note.id){
+          return note;
+        }
+        else {
+          return item;
+        }
+      })
+      this.setState({user : {
+        name : this.state.user.name,
+        schoolName : this.state.user.schoolName,
+        major : this.state.user.major,
+        reputation : this.state.user.reputation,
+        noteArray : newArray}
+      })
     }
+
   }
   constructor(props){
     super(props);
