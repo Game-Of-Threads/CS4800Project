@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import AppContext from './AppProvider.jsx'
-function DisplaySchool(){
-  return(
-    <p><AppContext.Consumer>{(context) => context.schoolName}</AppContext.Consumer></p>
-  )
-}
 
 class Header extends Component {
     constructor(props) {
@@ -15,11 +10,14 @@ class Header extends Component {
         return (
             <header className="hero">
                 <div className="hero-body">
-                    <Link to="/home"><h1 className="title" style={{color: 'blue'}}>All Notes</h1></Link>
-                    <DisplaySchool></DisplaySchool>
-                    <p className="subtitle">Alpha v0.18</p>
-                    <Link to="/account"><button className="button is-primary">Account</button></Link>
-                    <Link to="/notebook"><button className="button is-primary">Notebook</button></Link>
+                  <nav className="navbar is-primary">
+                    <h1 className="title">All Notes</h1>
+                    <div className="navbar-start">
+                      <Link to="/notebook"><a className="navbar-item">Notebook</a></Link>
+                      <Link to="/account"> <a className="navbar-item">Account </a></Link>
+                      <Link to="/search">  <a className="navbar-item">Search  </a></Link>
+                    </div>
+                  </nav>
                 </div>
             </header>
         )

@@ -1,130 +1,92 @@
-import React, { Component } from 'react';
-import Header from './Header.jsx'
+import React, {Component} from 'react';
 import Page from './Page.jsx'
+import AppContext from './AppProvider.jsx'
 
 class Notebook extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            activeNote: 1,
-            noteArray: [{
-                title: "Midterm Review",
-                data: "## Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in officia deserunt mollit anim id est laborum."
-            },
-            {
-                title: "djksahdfkjdlsf",
-                data: "Test 2"
-            },
-            {
-                title: "Im very stressed",
-                data: "Heh, nothing personell kid"
-            },
-            ]
-        }
-        this.changeActiveNote = this.changeActiveNote.bind(this);
-        let currentComponent = this;
-
-        // fetch('http://localhost:5000/api/genericGetCall?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
-        //   .then(function(response) {
-        //     return response.json()
-        //   })
-        //   .then((response) => {
-        //     console.log(response);
-        //   });
-        //
-        // fetch("http://localhost:5000/api/updateGenericString?table=account&generalCol=acc_firstName&newStringVal=Mara&compCol=acc_id&compVal=1")
-        //   .then(function(response) {
-        //   })
-        //   .then((response) => {
-        //   });
-        //
-        // fetch("http://localhost:5000/api/createAccount?firstName=New&lastName=user&email=testEmail@cpp.edu&accType=1")
-        //   .then(function(response) {
-        //   })
-        //   .then((response) => {
-        //   });
-        //
-        // fetch('http://ec2-18-223-32-101.us-east-2.compute.amazonaws.com:5000/api/lastName?accId=1')
-        //   .then(function(response) {
-        //     return response.json()
-        //   })
-        //   .then((response) => {
-        //     console.log(response);
-        //   });
-        //
-        // fetch("http://localhost:5000/api/createCourse?crsName=CS4800&crsDesc=Software Engineering&crsTerm=Fall2018")
-        //   .then(function(response) {
-        //   })
-        //   .then((response) => {
-        //   });
-        //
-        // fetch("http://localhost:5000/api/createNote?rating=0&accId=1&noteText=I hope this test note works.&secID=0")
-        //   .then(function(response) {
-        //   })
-        //   .then((response) => {
-        //   });
-
+    this.state = {
+      activeNote: 0,
     }
 
-    changeActiveNote(newNodeIndex) {
-        this.setState({
-            activeNote: newNodeIndex
-        })
-    }
+    this.changeActiveNote = this.changeActiveNote.bind(this);
+    let currentComponent = this;
+    /*
+    fetch('http://localhost:5000/api/genericGetCall?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1').then(function(response) {
+      return response.json()
+    }).then((response) => {
+      console.log(response);
+    });
 
-    render() {
-        return (
-            <div>
-                <Header></Header>
-                <div className="columns">
-                    <div className="column is-one-fifth" >
-                        <NoteList
-                            noteArray={this.state.noteArray}
-                            changeActiveNote={this.changeActiveNote}
-                        > </NoteList>
-                    </div>
-                    <div className="column">
-                        <Page note={
-                            this.state.noteArray[this.state.activeNote]
-                        }
-                        > </Page>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+    fetch("http://localhost:5000/api/updateGeneric?table=account&generalCol=acc_firstName&newVal='Mara'&compCol=acc_id&compVal=1").then(function(response) {}).then((response) => {});
+    */
+    // fetch('http://ec2-18-223-32-101.us-east-2.compute.amazonaws.com:5000/api/lastName?accId=1')
+    //   .then(function(response) {
+    //     return response.json()
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //   });
+  }
+
+  changeActiveNote(newNoteIndex) {
+    this.setState({activeNote: newNoteIndex})
+  }
+
+  updateNoteTitle(){
+    var index = this.state.activeNote;
+  }
+
+  render() {
+    return (
+      //NOTE: Wrapping entire elements in the AppContext.Consumer allows the context to be accessed incredibly easily without reinstancing the context
+      <AppContext.Consumer>
+        {(context) =>
+          <div className = "columns">
+              <div className = "column is-one-fifth">
+                <NoteList noteArray={context.user.noteArray} changeActiveNote={this.changeActiveNote}> </NoteList>
+              </div >
+                <div className = "column"><Page note={context.user.noteArray[this.state.activeNote]} updateNoteName={this.updateNoteName}></Page>
+              </div>
+          </div>
+      }
+    </AppContext.Consumer>
+    )
+  }
 }
 
 class NoteList extends Component {
-    constructor(props) {
-        super(props);
-        this.changeNote = this.changeNote.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      noteCount : 0,
+      noteArray : this.props.noteArray
     }
+    this.changeNote = this.changeNote.bind(this);
+    //this.addNote = this.addNote.bind(this);
+  }
+  changeNote(e) {
+    this.props.changeActiveNote(parseInt(e.target.id), 10);
+  }
 
-    changeNote(e) {
-        this.props.changeActiveNote(parseInt(e.target.id), 10);
-    }
+  componentWillReceiveProps(nextProps){
+    this.setState({noteArray : nextProps.noteArray});
+  }
 
-    render() {
-        var i = 0;
-        var noteList = this.props.noteArray.map((object) =>
-            <div className="panel-block"
-                id={i++}
-                key={i}
-                data={object.data}
-                onClick={this.changeNote}
-            >
-                {object.title}
-            </div>
-        )
-        return (
-            <nav className="panel" >
-                <div className="panel-heading" > Notes
-                </div>
-                {noteList}
+  render() {
+     var noteList = this.state.noteArray.map((object, index) => <div className = "panel-block"
+                  id={index} key={index} data = {object.data || "Loading"} onClick={this.changeNote}> {object.title || "Loading"}</div>)
+     return (
+        <AppContext.Consumer>
+          {(context) => (
+            <nav className="panel"> <div className="panel-heading">Notes</div>
+            {noteList}
+            <button className="button is-fullwidth is-light has-text-weight-semibold" onClick={context.addNote}> New Note</button>
             </nav>
-        )
+          )}
+        </AppContext.Consumer>
+      )
     }
 }
 export default Notebook;

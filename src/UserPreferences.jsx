@@ -9,24 +9,18 @@ class UserPreferences extends Component {
   }
   render(){
     return(
-        <div>
-            <Header></Header>
-            <div className="box">
-            <h1 className="title">User Preferences</h1>
-            <SearchBar></SearchBar>
-                <h2><span className="has-text-weight-semibold">Name:</span>
-                <AppContext.Consumer>{(context) => context.name}</AppContext.Consumer>
-                </h2>
-                <h2><span className="has-text-weight-semibold">School: </span>
-                    <AppContext.Consumer>{(context) => context.schoolName}</AppContext.Consumer>
-                </h2>
-                <h2><span className="has-text-weight-semibold">Major: </span>
-                    <AppContext.Consumer>{(context) => context.major}</AppContext.Consumer>
-                </h2>
-                <h2><span className="has-text-weight-semibold">Reputation: </span>
-                    <AppContext.Consumer>{(context) => context.reputation}</AppContext.Consumer>
-                </h2>
-            </div>
+        <div className="box">
+          <h1 className="title">User Preferences</h1>
+          <AppContext.Consumer>
+            {(context) =>
+              <div>
+                <h2><span className="has-text-weight-semibold">Name: </span>{context.user.name}</h2>
+                <h2><span className="has-text-weight-semibold">School: </span>{context.user.schoolName}</h2>
+                <h2><span className="has-text-weight-semibold">Major: </span>{context.user.major}</h2>
+                <h2><span className="has-text-weight-semibold">Reputation: </span>{context.user.reputation}</h2>
+              </div>
+            }
+          </AppContext.Consumer>
         </div>
     )
   }

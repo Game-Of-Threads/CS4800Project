@@ -18,14 +18,14 @@ class MaterialUIAutocomplete extends Component {
     }
 
     onNewRequest() {
-        alert('test');
+      
     }
 
     render() {
         return <MuiThemeProvider muiTheme={getMuiTheme()}>
             <AutoComplete
-                placeholder='Find your school...'
-                dataSource={this.state.dataSource}
+                placeholder={this.props.placeholder}
+                dataSource={this.props.dataSource}
                 onUpdateInput={this.onUpdateInput}
                 onNewRequest={this.onNewRequest}
             />
