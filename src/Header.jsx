@@ -9,7 +9,7 @@ class Header extends Component {
     render() {
         return (
                   <nav className="navbar">
-                    <nav className="title is-2">All Notes</nav>
+                    <nav className="title is-2">Bronco Note</nav>
                     <div className="navbar-start">
                       <Link to="/notebook"><a className="navbar-item">Notebook</a></Link>
                       <Link to="/search">  <a className="navbar-item">Search  </a></Link>

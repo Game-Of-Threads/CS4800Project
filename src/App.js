@@ -25,19 +25,23 @@ class App extends Component {
         {
           title: "Midterm Review",
           id: 0,
+          courseName : "4800",
           data: "## Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in officia deserunt mollit anim id est laborum."
         }, {
           title: "djksahdfkjdlsf",
           id : 1,
+          courseName : "4800",
           data: "Test 2"
         }, {
           title: "Im very stressed",
           id: 2,
+          courseName : "CS4800",
           data: "Heh, nothing personell kid"
         }
         , {
           title : "Success",
           id: 3,
+          courseName : "CS4800",
           data  : "It worked!"
         }
       ]
@@ -90,14 +94,16 @@ class App extends Component {
     },
 
     saveNote : (note) => {
-      fetch('http://localhost:5000/api/createNote?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
+      fetch('http://localhost:5000/api/saveNote?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
-        body: {
-          acc_id: 1234567890,
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
           noteText : note.data,
+          noteTitle : note.title,
+          noteID : note.id,
           rating : 1,
-          secId : note.courseName || "Undefined"
-        }
+          secID : note.courseName || "Undefined"
+        })
       }).then((response) => {
         console.log(response);
       });
