@@ -38,6 +38,16 @@ class Page extends Component {
             },
         })
     }
+
+    componentDidMount(){
+      fetch('http://localhost:5000/api/genericGetCall?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1').then(function(response) {
+        return response.json()
+      }).then((response) => {
+        console.log(response);
+      });
+
+    }
+
     updateCourseName(e){
       e.preventDefault();
       this.setState({

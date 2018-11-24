@@ -8,18 +8,23 @@ class Header extends Component {
     }
     render() {
         return (
-            <header className="hero">
-                <div className="hero-body">
-                  <nav className="navbar is-primary">
-                    <h1 className="title">All Notes</h1>
+                  <nav className="navbar">
+                    <nav className="title is-2">All Notes</nav>
                     <div className="navbar-start">
                       <Link to="/notebook"><a className="navbar-item">Notebook</a></Link>
-                      <Link to="/account"> <a className="navbar-item">Account </a></Link>
                       <Link to="/search">  <a className="navbar-item">Search  </a></Link>
+                      <AppContext.Consumer>
+                        {(context) => {
+                          context.userIsSignedIn ?
+                          <div>
+                          <Link to="/account"> <a className="navbar-item">Account </a></Link>
+                          <nav className="navbar-item" onClick={context.signOutUser}>Logout</nav>
+                          </div>
+                          : null
+                        }}
+                      </AppContext.Consumer>
                     </div>
                   </nav>
-                </div>
-            </header>
         )
     }
 }

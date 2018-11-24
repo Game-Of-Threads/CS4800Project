@@ -8,7 +8,7 @@ class NavigationBar extends Component {
 
     render() {
         return (
-            <nav className="navbar">
+            <nav className="navbar is-primary">
                 <a className="navbar-brand"><font size="5">AllNotes</font></a>
                 <Link to="/"><a className="navbar-item"> <font size="5">Landing Page
                         </font> </a> </Link>
@@ -44,7 +44,6 @@ class NavigationBar extends Component {
                     <a className="navbar-item"><font size="3"> About Us </font></a>
                 </div>
             </nav>
-
         )
     }
 }

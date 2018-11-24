@@ -9,14 +9,18 @@ import {Switch, Route} from 'react-router-dom'
 import UserPreferences from './UserPreferences.jsx'
 import AppContext from './AppProvider.jsx'
 import Search from './Search.jsx'
+import GoogleLogin from 'react-google-login';
+import NavigationBar from './NavigationBar.jsx'
+/*global gapi*/
 
 class App extends Component {
   state = {
+    userIsSignedIn : false,
     user : {
-      name : "Billy Bronco",
+      name : "Undefined",
       schoolName : "Cal Poly Pomona",
-      major: "Computer Science",
-      reputation: 1937,
+      major: "Undefined",
+      reputation: 0,
       noteArray: [
         {
           title: "Midterm Review",
@@ -38,6 +42,40 @@ class App extends Component {
         }
       ]
     },
+
+    signInUser : () => {
+      var auth2 = gapi.auth2.getAuthInstance();
+      var profile = auth2.currentUser.get().getBasicProfile();
+      this.setState({
+        userIsSignedIn : true,
+        user : {
+          name : profile.getName(),
+          id : profile.getId(),
+          email : profile.getEmail(),
+          schoolName : "Cal Poly Pomona",
+          binder : this.state.user.binder,
+          major : this.state.user.major,
+          noteArray : this.state.user.noteArray
+        }
+      })
+      fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1').then(function(response) {
+        return response.json()
+      }).then((response) => {
+        console.log(response);
+      });
+
+    },
+
+    signOutUser : () => {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+          console.log('User signed out.');});
+          this.setState({
+            userIsSignedIn : false
+          })
+      console.log(auth2);
+    },
+
     addNote : () => {
       var newArray = this.state.user.noteArray.concat({title: "New Note", data: "", id: this.state.user.noteArray.length+1});
       this.setState({
@@ -47,11 +85,22 @@ class App extends Component {
           major : this.state.user.major,
           reputation : this.state.user.reputation,
           noteArray : newArray
-        }
+        },
       })
     },
 
     saveNote : (note) => {
+      fetch('http://localhost:5000/api/createNote?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
+        method: 'POST',
+        body: {
+          acc_id: 1234567890,
+          noteText : note.data,
+          rating : 1,
+          secId : note.courseName || "Undefined"
+        }
+      }).then((response) => {
+        console.log(response);
+      });
       var newArray = this.state.user.noteArray.map((item) => {
         if(item.id === note.id){
           return note;
@@ -68,18 +117,16 @@ class App extends Component {
         noteArray : newArray}
       })
     }
-
   }
   constructor(props){
     super(props);
   }
-
   render() {
     return (
       <AppContext.Provider value={this.state}>
       <div className="App">
-        <Header></Header>
         <main className="container">
+          <Header userIsSignedIn={this.state.userIsSignedIn}></Header>
           <Switch>
             <Route exact path="/" component={LoginComponent} />
             <Route path="/notebook" component={Notebook} />

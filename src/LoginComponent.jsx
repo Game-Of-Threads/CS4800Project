@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
+import AppContext from './AppProvider.jsx'
 
 class LoginComponent extends Component {
     constructor(props) {
@@ -10,8 +12,8 @@ class LoginComponent extends Component {
             // NOTE: "success" for green "warning" for yellow "danger" for red
         }
         this.updateState = this.updateState.bind(this);
+        this.onSignInFailure = this.onSignInFailure.bind(this);
     }
-
     updateState(e) {
         //Updates the state of the component on every change.
         //Incredibly useful, should just copy/paste into most components
@@ -20,16 +22,28 @@ class LoginComponent extends Component {
             [e.target.id]: e.target.value
         })
     }
+
+    onSignInFailure(){
+      console.log("Sign In failed");
+    }
     render() {
         return (
-            <div className="container">
+          <AppContext.Consumer>
+            {(context) => (
+              <div className="container">
                 <div className="box">
-                    <h1 className="title is-2">Get Started with Bronco Notes!</h1>
-                    <label className={`has-text-${this.state.messageStatus}`}> {this.state.message}<br></br></label>
-                    <br></br>
-                    <Link to="/notebook"><button className="button is-primary" onClick={this.attemptLogin}>Login</button></Link>
+                  <h1 className="title is-2">Get Started with Bronco Notes!</h1>
+                  <label className={`has-text-${this.state.messageStatus}`}> {this.state.message}<br></br></label>
+                  <GoogleLogin
+                    clientId="690986198979-e6btiprgsgp69hlrc5p589bsnnfbikue.apps.googleusercontent.com"
+                    buttonText="Log In with Google"
+                    onSuccess={context.signInUser}
+                    onFailure={this.onSignInFailure}/>
+                  <br></br>
                 </div>
-            </div>
+              </div>
+            )}
+          </AppContext.Consumer>
         )
     }
 }

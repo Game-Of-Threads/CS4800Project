@@ -29,7 +29,6 @@ class Notebook extends Component {
     //     console.log(response);
     //   });
   }
-
   changeActiveNote(newNoteIndex) {
     this.setState({activeNote: newNoteIndex})
   }

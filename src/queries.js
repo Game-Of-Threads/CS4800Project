@@ -1,8 +1,10 @@
 var express = require('express');
 var app = express();
 var request = require("request");
+var bodyParser = require('body-parser');
 var userDetails;
 const port = process.env.PORT || 5000;
+app.use(bodyParser.json())
 
 app.get('/api/', function(req, res) {
   res.json('default');
@@ -34,9 +36,6 @@ app.get("/api/genericGetCall", function(req, res, next) {
     }
   });
 });
-
-
-
 
 app.get("/api/getAllAccInfo", function(req, res, next) {
   var pg = require('pg');
@@ -91,14 +90,6 @@ app.get('/api/updateGenericString', function(req, res, next) {
   });
 });
 
-
-
-
-
-
-
-
-
 // Will update a value in the database with a number value
 app.post('/api/updateGenericNumber', function(req, res, next) {
   var pg = require('pg');
@@ -126,12 +117,6 @@ app.post('/api/updateGenericNumber', function(req, res, next) {
   });
 });
 
-
-
-
-
-
-
 app.post('/api/createAccount', function(req, res, next) {
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
@@ -157,11 +142,6 @@ app.post('/api/createAccount', function(req, res, next) {
     }
   });
 });
-
-
-
-
-
 
 app.post('/api/createCourse', function(req, res, next) {
   var pg = require('pg');
@@ -189,12 +169,6 @@ app.post('/api/createCourse', function(req, res, next) {
   });
 });
 
-
-
-
-
-
-
 app.post('/api/createNote', function(req, res, next) {
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
@@ -220,14 +194,6 @@ app.post('/api/createNote', function(req, res, next) {
     }
   });
 });
-
-
-
-
-
-
-
-
 
 app.get('/api/getNoteByUser', function(req, res, next) {
   var pg = require('pg');
@@ -255,12 +221,7 @@ app.get('/api/getNoteByUser', function(req, res, next) {
   });
 });
 
-
-
-
-
-
-app.get('/api/getNoteBySection', function(req, res, next) {
+app.post('/api/getNoteBySection', function(req, res, next) {
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
   var client = new pg.Client(conString);
@@ -271,16 +232,15 @@ app.get('/api/getNoteBySection', function(req, res, next) {
     }
   });
   console.log("Connected!");
-  var sql = "SELECT note_text FROM note WHERE sch_crs_sec_id = " + req.query.sch_crs_sec_id + ";";
+  var sql = "SELECT note_text FROM note WHERE sch_crs_sec_id = " + "1" + ";";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error")
-      reject(err);
+      console.log(err)
       client.end();
     } else {
       console.log(result.rows)
-      res.send(sql)
+      res.send(result.rows)
       client.end();
     }
   });
