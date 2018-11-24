@@ -4,7 +4,11 @@ var request = require("request");
 var bodyParser = require('body-parser');
 var userDetails;
 const port = process.env.PORT || 5000;
+app.use(bodyParser.urlencoded())
+var jsonParser = bodyParser.json()
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}));
+
 
 app.get('/api/', function(req, res) {
   res.json('default');
@@ -221,7 +225,7 @@ app.get('/api/getNoteByUser', function(req, res, next) {
   });
 });
 
-app.post('/api/getNoteBySection', function(req, res, next) {
+app.post('/api/getNoteBySection', jsonParser, function(req, res, next) {
   var pg = require('pg');
   var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
   var client = new pg.Client(conString);
@@ -232,7 +236,8 @@ app.post('/api/getNoteBySection', function(req, res, next) {
     }
   });
   console.log("Connected!");
-  var sql = "SELECT note_text FROM note WHERE sch_crs_sec_id = " + "1" + ";";
+  console.log("REQUEST BODY: ", req.body);
+  var sql = "SELECT note_title, note_text FROM note WHERE sch_crs_sec_id = " + req.body.sch_crs_sec_id + ";";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
@@ -240,15 +245,11 @@ app.post('/api/getNoteBySection', function(req, res, next) {
       client.end();
     } else {
       console.log(result.rows)
-      res.send(result.rows)
+      res.send({body: result.rows})
       client.end();
     }
   });
 });
-
-
-
-
 
 app.get('/api/getNoteByAccAndSection', function(req, res, next) {
   var pg = require('pg');
