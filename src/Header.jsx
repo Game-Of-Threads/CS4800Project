@@ -14,14 +14,15 @@ class Header extends Component {
                       <Link to="/notebook"><a className="navbar-item">Notebook</a></Link>
                       <Link to="/search">  <a className="navbar-item">Search  </a></Link>
                       <AppContext.Consumer>
-                        {(context) => {
-                          context.userIsSignedIn ?
+                        {(context) => (
+                          !context.userIsSignedIn ? (
                           <div>
-                          <Link to="/account"> <a className="navbar-item">Account </a></Link>
-                          <nav className="navbar-item" onClick={context.signOutUser}>Logout</nav>
+                            <Link to="/account"> <a className="navbar-item">Account </a></Link>
+                            <nav className="navbar-item" onClick={context.signOutUser}>Logout</nav>
                           </div>
+                        )
                           : null
-                        }}
+                        )}
                       </AppContext.Consumer>
                     </div>
                   </nav>

@@ -47,7 +47,7 @@ class App extends Component {
       ]
     },
 
-    signInUser : () => {
+    signInUser : (that) => {
       var auth2 = gapi.auth2.getAuthInstance();
       var profile = auth2.currentUser.get().getBasicProfile();
       this.setState({
@@ -62,6 +62,21 @@ class App extends Component {
           noteArray : this.state.user.noteArray
         }
       })
+      return function(response) {
+        let userData;
+        if (response.w3.U3) {
+          userData = {
+            name: response.w3.ig,
+            provider: 'google',
+            email: response.w3.U3,
+            provider_id: response.El,
+            token: response.Zi.access_token,
+            provider_pic: response.w3.Paa
+          }
+          sessionStorage.setItem("userData", userData);
+          this.setState({redirect: false});
+        }
+      }
       fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1').then(function(response) {
         return response.json()
       }).then((response) => {
@@ -108,7 +123,14 @@ class App extends Component {
     },
 
     addNoteToLibarary : (note) => {
-      var newArray = this.state.user.noteArray.concat(note);
+      console.log(note);
+      var formattedNote = {
+        title: note.note_title,
+        id: note.note_id,
+        courseName : note.course_name,
+        data: note.note_text
+      }
+      var newArray = this.state.user.noteArray.concat(formattedNote);
       this.setState({
         user : {
           name : this.state.user.name,
@@ -119,7 +141,7 @@ class App extends Component {
         },
       })
     },
-    
+
     saveNote : (note) => {
       fetch('http://localhost:5000/api/saveNote?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
         method: 'POST',

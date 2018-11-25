@@ -273,7 +273,7 @@ app.post('/api/getNoteBySection', function(req, res, next) {
   });
   console.log("Connected!");
   console.log("REQUEST BODY: ", req.body);
-  var sql = "SELECT note_title, note_text, note_id FROM note WHERE course_name = '" + req.body.course_name + "';";
+  var sql = "SELECT note_title, note_text, note_id, course_name FROM note WHERE course_name = '" + req.body.course_name + "';";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {

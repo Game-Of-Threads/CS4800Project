@@ -33,15 +33,19 @@ class Search extends Component {
       this.setState({courseName : e.target.value})
   }
   render(){
-    var notes = this.state.noteArray.map(function(item, key) {
-              <nav href="" key={key} id={key} className="panel-block">
-                <span className="is-bold">{item.note_title || "Untitled Note"}</span> : {item.note_text.substring(0 , 20)}...
-                  <button className="button" onClick={() => context.addNoteToLibarary(item)}> Add to Library</button>
+    var notes = this.state.noteArray.map((item, key) =>
+    <AppContext.Consumer>
+      {(context) => (
+               <nav key={key} id={key} className="panel-block">
+                  <span className="hast-text-weight-is-bold">{item.note_title || "Untitled Note"}</span> : {item.note_text}
+                  <button className="button" onClick={() => context.addNoteToLibarary(item)}>Add to Library</button>
                 </nav>
-    })
+              )}
+      </AppContext.Consumer>
+    )
+
     return(
-      <AppContext.Consumer>
-        {(context) => (
+
           <div className="container">
               <input type="text" className="input" id="courseName" onChange={this.updateState}placeholder="Search by Course Name (e.g ENG1000)"/>
               <button className="button" onClick={this.searchByCourseName}>Search</button>
@@ -49,8 +53,6 @@ class Search extends Component {
                 {notes}
               </nav>
           </div>
-        )}
-        </AppContext.Consumer>
     )
   }
 }

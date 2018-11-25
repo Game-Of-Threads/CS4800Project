@@ -17,25 +17,24 @@ class LoginComponent extends Component {
 
         this.updateState = this.updateState.bind(this);
         this.onSignInFailure = this.onSignInFailure.bind(this);
-        this.signInUser = function(that) {
-          return function(response) {
-            let userData;
-
-            if (response.w3.U3) {
-              userData = {
-                name: response.w3.ig,
-                provider: 'google',
-                email: response.w3.U3,
-                provider_id: response.El,
-                token: response.Zi.access_token,
-                provider_pic: response.w3.Paa
-              }
-
-              sessionStorage.setItem("userData", userData);
-              that.setState({redirect: true});
-            }
-          };
-        }
+        // this.signInUser = function(that) {
+        //   return function(response) {
+        //     let userData;
+        //
+        //     if (response.w3.U3) {
+        //       userData = {
+        //         name: response.w3.ig,
+        //         provider: 'google',
+        //         email: response.w3.U3,
+        //         provider_id: response.El,
+        //         token: response.Zi.access_token,
+        //         provider_pic: response.w3.Paa
+        //       }
+        //       sessionStorage.setItem("userData", userData);
+        //       that.setState({redirect: true});
+        //     }
+        //   };
+        // }
     }
     updateState(e) {
         //Updates the state of the component on every change.
@@ -65,7 +64,7 @@ class LoginComponent extends Component {
                   <GoogleLogin
                     clientId="690986198979-e6btiprgsgp69hlrc5p589bsnnfbikue.apps.googleusercontent.com"
                     buttonText="Log In with Google"
-                    onSuccess={this.signInUser(this)}
+                    onSuccess={() => context.signInUser(this)}
                     onFailure={this.onSignInFailure}/>
                   <br></br>
                 </div>
