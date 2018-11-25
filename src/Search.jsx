@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import SearchBar from './SearchBar.jsx';
+import AppContext from './AppProvider.jsx'
+/*global context*/
+
 
 class Search extends Component {
   constructor(props){
@@ -15,7 +18,7 @@ class Search extends Component {
     fetch('http://localhost:5000/api/getNoteBySection?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
       method: 'POST',
       body : JSON.stringify({
-        sch_crs_sec_id : this.state.courseName
+        course_name : this.state.courseName.toUpperCase()
       }),
       headers: {'Content-Type':'application/json'}
     }).then((response) => {
@@ -31,16 +34,23 @@ class Search extends Component {
   }
   render(){
     var notes = this.state.noteArray.map(function(item, key) {
-      return <nav href="" key={key} id={key} className="panel-block">{item.note_title || "Untitled Note"} : {item.note_text.substring(0 , 20)}...</nav>
+              <nav href="" key={key} id={key} className="panel-block">
+                <span className="is-bold">{item.note_title || "Untitled Note"}</span> : {item.note_text.substring(0 , 20)}...
+                  <button className="button" onClick={() => context.addNoteToLibarary(item)}> Add to Library</button>
+                </nav>
     })
     return(
-      <div className="container">
-          <input type="text" className="input" id="courseName" onChange={this.updateState}placeholder="Search by Course Name (e.g ENG1000)"/>
-          <button className="button" onClick={this.searchByCourseName}>Search</button>
-          <nav className="panel">
-            {notes}
-          </nav>
-      </div>
+      <AppContext.Consumer>
+        {(context) => (
+          <div className="container">
+              <input type="text" className="input" id="courseName" onChange={this.updateState}placeholder="Search by Course Name (e.g ENG1000)"/>
+              <button className="button" onClick={this.searchByCourseName}>Search</button>
+              <nav className="panel">
+                {notes}
+              </nav>
+          </div>
+        )}
+        </AppContext.Consumer>
     )
   }
 }

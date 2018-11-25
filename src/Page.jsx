@@ -10,7 +10,6 @@ class Page extends Component {
         this.state = {
             author: this.props.username || "Anonymous",
             title: this.props.note.title || "Untitled Note",
-            courseName: "" || "Unnamed Course",
             schoolName: "" || "Unnamed School",
             saved: true,
             note : this.props.note,
@@ -19,6 +18,7 @@ class Page extends Component {
         // NOTE:
         //Every function must be bound to the component through these statements
         this.updateState = this.updateState.bind(this);
+        this.updateCourseName = this.updateCourseName.bind(this)
         this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
     }
 
@@ -34,7 +34,7 @@ class Page extends Component {
               [e.target.id]: e.target.value,
               score : this.state.note.score,
               id : this.state.note.id,
-              courseName : this.state.courseName
+              courseName : this.state.note.courseName
             },
         })
     }
@@ -57,6 +57,7 @@ class Page extends Component {
             {(context) => (
               <div>
                   <p className="subtitle"><input type="text" className="input" onChange={this.updateState} placeholder={this.state.note.title}/> {`from ${this.state.courseName} at ${context.user.schoolName}`}</p>
+                  <input type="text" onChange={this.updateCourseName} value={this.state.note.courseName} className="input"/>
                   <div className="columns">
                       <div className="column">
                           <textarea id="data" className="textarea" value={this.state.note.data} rows="20" onChange={this.updateState}></textarea>

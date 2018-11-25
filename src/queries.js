@@ -183,10 +183,15 @@ app.post('/api/createNote', function(req, res, next) {
     }
   });
   console.log("Connected!");
-  //var sql = "ALTER TABLE note ALTER COLUMN note_id TYPE varchar(255);";
-  var noteID = guidGenerator()
-  var sql = "INSERT INTO note(note_rating, acc_id, note_title, note_id, note_text, sch_crs_sec_id) VALUES (" + req.body.rating + "," + 0 + ", '"
-                                                + req.body.noteTitle + "' , '" + noteID + "' , '" +  req.body.noteText + "', " + 4800 + ");";
+   //var sql = "ALTER TABLE note ALTER COLUMN acc_id varchar(255);";
+  var sql = "INSERT INTO note(note_rating, note_title, note_text, course_name, sch_crs_sec_id, acc_id) VALUES ("
+                                                + req.body.rating + ", '"
+                                                + req.body.noteTitle + "' , '"
+                                                + req.body.noteText + "', '"
+                                                + req.body.secID + "' , "
+                                                + 1 + ", "
+                                                + 1 + ");";
+
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
@@ -195,7 +200,7 @@ app.post('/api/createNote', function(req, res, next) {
       client.end();
     } else {
       console.log(result.rows)
-      res.send(sql)
+      res.send(result)
       client.end();
     }
   });
@@ -214,6 +219,7 @@ app.post('/api/saveNote', function(req, res, next) {
   console.log("Connected!");
   var sql = "UPDATE note SET note_title= '" + req.body.noteTitle +
                           "' , note_text='" + req.body.noteText +
+                          "' , course_name='" + req.body.course_name +
                           "' WHERE note_id= '" + req.body.noteID + "';"
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
@@ -267,7 +273,7 @@ app.post('/api/getNoteBySection', function(req, res, next) {
   });
   console.log("Connected!");
   console.log("REQUEST BODY: ", req.body);
-  var sql = "SELECT note_title, note_text, note_id FROM note WHERE sch_crs_sec_id = " + req.body.sch_crs_sec_id + ";";
+  var sql = "SELECT note_title, note_text, note_id FROM note WHERE course_name = '" + req.body.course_name + "';";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {

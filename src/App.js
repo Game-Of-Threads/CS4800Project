@@ -81,7 +81,21 @@ class App extends Component {
     },
 
     addNote : () => {
-      var newArray = this.state.user.noteArray.concat({title: "New Note", data: "", id: this.state.user.noteArray.length+1});
+      fetch('http://localhost:5000/api/createNote?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          noteText : "",
+          mode: "cors", // no-cors, cors, *same-origin
+          credentials: "same-origin", // include, *same-origin, omit
+          noteTitle : "Untitled Note",
+          rating : 1,
+          secID : 1
+        })
+      }).then((response) => {
+        console.log(response);
+      });
+      var newArray = this.state.user.noteArray.concat({title: "New Note", data: ""});
       this.setState({
         user : {
           name : this.state.user.name,
@@ -93,6 +107,19 @@ class App extends Component {
       })
     },
 
+    addNoteToLibarary : (note) => {
+      var newArray = this.state.user.noteArray.concat(note);
+      this.setState({
+        user : {
+          name : this.state.user.name,
+          schoolName : this.state.user.schoolName,
+          major : this.state.user.major,
+          reputation : this.state.user.reputation,
+          noteArray : newArray
+        },
+      })
+    },
+    
     saveNote : (note) => {
       fetch('http://localhost:5000/api/saveNote?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
@@ -102,7 +129,7 @@ class App extends Component {
           noteTitle : note.title,
           noteID : note.id,
           rating : 1,
-          secID : note.courseName || "Undefined"
+          course_name : note.courseName.toUpperCase() || "Undefined"
         })
       }).then((response) => {
         console.log(response);
