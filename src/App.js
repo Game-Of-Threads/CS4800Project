@@ -77,10 +77,8 @@ class App extends Component {
           provider_pic: resp.w3.Paa
         }
       }
-
-      if (userData !== null)
+      if (userData != null)
         sessionStorage.setItem("userData", JSON.stringify(userData));
-
       fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
       .then(function(response) {
         return response.json()

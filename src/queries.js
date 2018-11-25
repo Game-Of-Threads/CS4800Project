@@ -30,7 +30,7 @@ app.get("/api/genericGetCall", function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log("error")
-      reject(err);
+      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -56,7 +56,7 @@ app.get("/api/getAllAccInfo", function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log("error")
-      reject(err);
+      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -83,7 +83,7 @@ app.get('/api/updateGenericString', function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log("error")
-      reject(err);
+      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -110,7 +110,7 @@ app.post('/api/updateGenericNumber', function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log("error")
-      reject(err);
+      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -135,8 +135,8 @@ app.post('/api/createAccount', function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error")
-      reject(err);
+      console.log("error");
+      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -161,8 +161,8 @@ app.post('/api/createCourse', function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error")
-      reject(err);
+      console.log("error");
+      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -195,7 +195,7 @@ app.post('/api/createNote', function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log(err)
+      console.log(err);
       res.send(err);
       client.end();
     } else {
@@ -224,12 +224,12 @@ app.post('/api/saveNote', function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log(err)
+      console.log(err);
       res.send(err);
       client.end();
     } else {
-      console.log(result.rows)
-      res.send(sql)
+      console.log(result.rows);
+      res.send(sql);
       client.end();
     }
   });
@@ -250,8 +250,8 @@ app.get('/api/getNoteByUser', function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error")
-      reject(err);
+      console.log("error");
+      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -277,10 +277,10 @@ app.post('/api/getNoteBySection', function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log(err)
+      console.log(err);
       client.end();
     } else {
-      console.log(result.rows)
+      console.log(result.rows);
       res.send({body: result.rows})
       client.end();
     }
@@ -299,15 +299,15 @@ app.get('/api/getNoteByAccAndSection', function(req, res, next) {
   });
   console.log("Connected!");
   var sql = "SELECT note_text FROM note WHERE sch_crs_sec_id = " + req.query.sch_crs_sec_id + " AND acc_id = " + req.query.accId + ";";
-  console.log("Query being sent to the db" + sql);
+  console.log("Query being sent     to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error")
-      reject(err);
+      console.log("error");
+      reject(new Error('...'));
       client.end();
     } else {
-      console.log(result.rows)
-      res.send(sql)
+      console.log(result.rows);
+      res.send(sql);
       client.end();
     }
   });

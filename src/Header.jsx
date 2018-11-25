@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GoogleLogin from 'react-google-login';
 import { Link } from 'react-router-dom';
 import AppContext from './AppProvider.jsx'
 
@@ -18,7 +19,17 @@ class Header extends Component {
                           sessionStorage.getItem('userIsSignedIn') ? (
                           <div>
                             <Link to="/account"> <a className="navbar-item">Account </a></Link>
-                            <nav className="navbar-item" onClick={context.signOutUser}>Logout</nav>
+                            <Link to="/"><nav className="navbar-item" onClick={context.signOutUser}>Logout</nav></Link>
+                          </div>
+                        )
+                          : undefined
+                        )}
+                      </AppContext.Consumer>
+                      <AppContext.Consumer>
+                        {() => (
+                          !sessionStorage.getItem('userIsSignedIn') ? (
+                          <div>
+                            <Link to="/"><nav className="navbar-item">Login</nav></Link>
                           </div>
                         )
                           : undefined
