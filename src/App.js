@@ -52,10 +52,6 @@ class App extends Component {
       var profile = auth2.currentUser.get().getBasicProfile();
       sessionStorage.setItem("userIsSignedIn", true);
 
-      console.log("auth2: ");
-      console.log(gapi);
-      console.log(auth2);
-
       this.setState({
         userIsSignedIn : sessionStorage.getItem("userIsSignedIn"),
         user : {
@@ -84,8 +80,6 @@ class App extends Component {
 
       if (userData !== null)
         sessionStorage.setItem("userData", JSON.stringify(userData));
-
-      console.log(sessionStorage.getItem("userData"));
 
       fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
       .then(function(response) {
