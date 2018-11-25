@@ -15,13 +15,13 @@ class Header extends Component {
                       <Link to="/search">  <a className="navbar-item">Search  </a></Link>
                       <AppContext.Consumer>
                         {(context) => (
-                          !context.userIsSignedIn ? (
+                          sessionStorage.getItem('userIsSignedIn') ? (
                           <div>
                             <Link to="/account"> <a className="navbar-item">Account </a></Link>
                             <nav className="navbar-item" onClick={context.signOutUser}>Logout</nav>
                           </div>
                         )
-                          : null
+                          : undefined
                         )}
                       </AppContext.Consumer>
                     </div>

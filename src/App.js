@@ -15,9 +15,9 @@ import NavigationBar from './NavigationBar.jsx'
 
 class App extends Component {
   state = {
-    userIsSignedIn : false,
+    userIsSignedIn : sessionStorage.getItem("userIsSignedIn") || false,
     user : {
-      name : "Undefined",
+      name : (sessionStorage.getItem("userData")) ? JSON.parse(sessionStorage.getItem("userData")).name : "Undefined",
       schoolName : "Cal Poly Pomona",
       major: "Undefined",
       reputation: 0,
@@ -47,11 +47,17 @@ class App extends Component {
       ]
     },
 
-    signInUser : (that) => {
+    signInUser : (resp) => {
       var auth2 = gapi.auth2.getAuthInstance();
       var profile = auth2.currentUser.get().getBasicProfile();
+      sessionStorage.setItem("userIsSignedIn", true);
+
+      console.log("auth2: ");
+      console.log(gapi);
+      console.log(auth2);
+
       this.setState({
-        userIsSignedIn : true,
+        userIsSignedIn : sessionStorage.getItem("userIsSignedIn"),
         user : {
           name : profile.getName(),
           id : profile.getId(),
@@ -62,37 +68,40 @@ class App extends Component {
           noteArray : this.state.user.noteArray
         }
       })
-      return function(response) {
-        let userData;
-        if (response.w3.U3) {
-          userData = {
-            name: response.w3.ig,
-            provider: 'google',
-            email: response.w3.U3,
-            provider_id: response.El,
-            token: response.Zi.access_token,
-            provider_pic: response.w3.Paa
-          }
-          sessionStorage.setItem("userData", userData);
-          this.setState({redirect: false});
+
+      let userData = null;
+
+      if (resp.w3.U3) {
+        userData = {
+          name: resp.w3.ig,
+          provider: 'google',
+          email: resp.w3.U3,
+          provider_id: resp.El,
+          token: resp.Zi.access_token,
+          provider_pic: resp.w3.Paa
         }
       }
-      fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1').then(function(response) {
+
+      if (userData !== null)
+        sessionStorage.setItem("userData", JSON.stringify(userData));
+
+      console.log(sessionStorage.getItem("userData"));
+
+      fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
+      .then(function(response) {
         return response.json()
       }).then((response) => {
         console.log(response);
-      });
+      }).catch((error) => console.log(error));
 
     },
 
     signOutUser : () => {
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-          console.log('User signed out.');});
-          this.setState({
-            userIsSignedIn : false
-          })
-      console.log(auth2);
+      sessionStorage.removeItem("userData");
+      sessionStorage.removeItem("userIsSignedIn");
+      let tempUser = this.state.user;
+      tempUser.name = "Undefined"
+      this.setState({userIsSignedIn: false, user: tempUser});
     },
 
     addNote : () => {
