@@ -81,12 +81,16 @@ class App extends Component {
       if (userData != null) {
         sessionStorage.setItem("userData", JSON.stringify(userData));
       }
+    //   // adds the account's name & email to database
     //   fetch('http://localhost:5000/api/createAccount?getColumn=acc_email&table=account&compColumn=acc_id&val=1', {
-    //       method: 'POST',
-    //       headers: {'Content-Type':'application/json'},
-    //       body: JSON.stringify({
-    //         //   acc_firstName : userData.name}),
-
+    //     method: 'POST',
+    //     headers: {'Content-Type':'application/json'},
+    //     body: JSON.stringify({
+    //       name : userData.name,
+    //       email : userData.email
+    //     })
+    //   }).then((response) => {
+    //     console.log(response);
     //   });
 
       /* Does not work correctly */

@@ -30,7 +30,6 @@ app.get("/api/genericGetCall", function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log(err);
-      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -56,7 +55,6 @@ app.get("/api/getAllAccInfo", function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log(err);
-      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -83,7 +81,6 @@ app.get('/api/updateGenericString', function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log(err);
-      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -110,7 +107,6 @@ app.post('/api/updateGenericNumber', function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log(err);
-      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -136,7 +132,6 @@ app.post('/api/createAccount', function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log(err);
-      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -162,7 +157,6 @@ app.post('/api/createCourse', function(req, res, next) {
   client.query(sql, function(err, result) {
     if (err) {
       console.log(err);
-      reject(new Error('...'));
       client.end();
     } else {
       console.log(result.rows)
@@ -250,8 +244,7 @@ app.get('/api/getNoteByUser', function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error");
-      reject(new Error('...'));
+      console.log(err);
       client.end();
     } else {
       console.log(result.rows)
