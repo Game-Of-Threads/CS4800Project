@@ -77,6 +77,8 @@ class App extends Component {
       if (userData != null) {
         sessionStorage.setItem("userData", JSON.stringify(userData));
       }
+      var tempArray = this.state.user.noteArray;
+      this.state.getSavedNotesFromUser(tempArray);
     //   // adds the account's name & email to database
     //   fetch('http://localhost:5000/api/createAccount?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
     //     method: 'POST',
@@ -186,8 +188,7 @@ class App extends Component {
     },
 
     // gets all the notes from the database that the user has saved 
-    getSavedNotesFromUser : () => {
-      let tempArray = this.state.user.noteArray;
+    getSavedNotesFromUser(tempArray) {
       fetch('http://localhost:5000/api/getNoteByUser?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
       .then(function(response) {
         response.json()
