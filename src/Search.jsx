@@ -38,7 +38,7 @@ class Search extends Component {
       {(context) => (
                <nav key={key} id={key} className="panel-block">
                   <span className="hast-text-weight-is-bold">{item.note_title || "Untitled Note"}</span> : {item.note_text}
-                  <button className="button" onClick={() => context.addNoteToLibarary(item)}>Add to Library</button>
+                  <button className="button" onClick={() => context.addNoteToLibrary(item)}>Add to Library</button>
                 </nav>
               )}
       </AppContext.Consumer>

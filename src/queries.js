@@ -127,15 +127,18 @@ app.post('/api/createAccount', function(req, res, next) {
     }
   });
   console.log("Connected!");
-  var sql = "INSERT INTO account(acc_name, acc_email) VALUES ('" + req.query.name + "','" + req.query.email + ');';
+  var sql = "INSERT INTO account(acc_firstName, acc_email) VALUES (" 
+                                        + req.body.firstName + ", " 
+                                        + req.body.email + ");";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
       console.log(err);
+      res.send(err);
       client.end();
     } else {
       console.log(result.rows)
-      res.send(sql)
+      res.send(result)
       client.end();
     }
   });
@@ -160,7 +163,7 @@ app.post('/api/createCourse', function(req, res, next) {
       client.end();
     } else {
       console.log(result.rows)
-      res.send(sql)
+      res.send(sql);
       client.end();
     }
   });
@@ -248,7 +251,7 @@ app.get('/api/getNoteByUser', function(req, res, next) {
       client.end();
     } else {
       console.log(result.rows)
-      res.send(sql)
+      res.send(result)
       client.end();
     }
   });

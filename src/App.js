@@ -17,9 +17,9 @@ class App extends Component {
   state = {
     userIsSignedIn : sessionStorage.getItem("userIsSignedIn") || false,
     user : {
-      name : (sessionStorage.getItem("userData")) ? JSON.parse(sessionStorage.getItem("userData")).name : "Undefined",
+      name : (sessionStorage.getItem("userData")) ? JSON.parse(sessionStorage.getItem("userData")).name : "Anonymous",
       schoolName : "Cal Poly Pomona",
-      major: "Undefined",
+      major: "Computer Science",
       reputation: 0,
       noteArray: [
         {
@@ -51,7 +51,6 @@ class App extends Component {
       var auth2 = gapi.auth2.getAuthInstance();
       var profile = auth2.currentUser.get().getBasicProfile();
       sessionStorage.setItem("userIsSignedIn", true);
-
       this.setState({
         userIsSignedIn : sessionStorage.getItem("userIsSignedIn"),
         user : {
@@ -64,9 +63,7 @@ class App extends Component {
           noteArray : this.state.user.noteArray
         }
       })
-
       let userData = null;
-
       if (resp.w3.U3) {
         userData = {
           name: resp.w3.ig,
@@ -77,29 +74,28 @@ class App extends Component {
           provider_pic: resp.w3.Paa
         }
       }
-      console.log(userData.name);
       if (userData != null) {
         sessionStorage.setItem("userData", JSON.stringify(userData));
       }
     //   // adds the account's name & email to database
-    //   fetch('http://localhost:5000/api/createAccount?getColumn=acc_email&table=account&compColumn=acc_id&val=1', {
+    //   fetch('http://localhost:5000/api/createAccount?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
     //     method: 'POST',
     //     headers: {'Content-Type':'application/json'},
     //     body: JSON.stringify({
-    //       name : userData.name,
+    //       firstName : String(userData.name).split(" ")[0],
     //       email : userData.email
     //     })
     //   }).then((response) => {
     //     console.log(response);
     //   });
 
-      /* Does not work correctly */
-    //   fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
-    //   .then(function(response) {
-    //     return response.json()
-    //   }).then((response) => {
-    //     console.log(response);
-    //   }).catch((error) => console.log(error));
+    //   /* Does not work correctly */
+      fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
+      .then(function(response) {
+        return response.json()
+      }).then((response) => {
+        console.log(response);
+      }).catch((error) => console.log(error));
 
     },
 
@@ -138,7 +134,7 @@ class App extends Component {
       })
     },
 
-    addNoteToLibarary : (note) => {
+    addNoteToLibrary : (note) => {
       console.log(note);
       var formattedNote = {
         title: note.note_title,
@@ -187,11 +183,36 @@ class App extends Component {
         reputation : this.state.user.reputation,
         noteArray : newArray}
       })
+    },
+
+    // gets all the notes from the database that the user has saved 
+    getSavedNotesFromUser : () => {
+      let tempArray = this.state.user.noteArray;
+      fetch('http://localhost:5000/api/getNoteByUser?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
+      .then(function(response) {
+        response.json()
+        .then(function(result){
+          tempArray.concat(result);
+          return result;
+        })
+      }).then((response, result) => {
+        console.log(response);
+        console.log(result);
+      }).catch((error) => console.log(error));
+      this.setState({user : {
+        name : this.state.user.name,
+        schoolName : this.state.user.schoolName,
+        major : this.state.user.major,
+        reputation : this.state.user.reputation,
+        noteArray : tempArray}
+      })
     }
   }
+
   constructor(props){
     super(props);
   }
+
   render() {
     return (
       <AppContext.Provider value={this.state}>

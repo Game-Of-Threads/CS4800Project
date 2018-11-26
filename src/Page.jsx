@@ -56,7 +56,7 @@ class Page extends Component {
           <AppContext.Consumer>
             {(context) => (
               <div>
-                  <p className="subtitle"><input type="text" className="input" onChange={this.updateState} placeholder={this.state.note.title}/> {`from ${this.state.courseName} at ${context.user.schoolName}`}</p>
+                  <p className="subtitle"><input type="text" className="input" onChange={this.updateState} placeholder={this.state.note.title}/> {`from ${context.user.name} at ${context.user.schoolName}`}</p>
                   <input type="text" onChange={this.updateCourseName} value={this.state.note.courseName} className="input"/>
                   <div className="columns">
                       <div className="column">
