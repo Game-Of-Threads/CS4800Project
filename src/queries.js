@@ -29,7 +29,7 @@ app.get("/api/genericGetCall", function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error")
+      console.log(err);
       reject(new Error('...'));
       client.end();
     } else {
@@ -55,7 +55,7 @@ app.get("/api/getAllAccInfo", function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error")
+      console.log(err);
       reject(new Error('...'));
       client.end();
     } else {
@@ -82,7 +82,7 @@ app.get('/api/updateGenericString', function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error")
+      console.log(err);
       reject(new Error('...'));
       client.end();
     } else {
@@ -109,7 +109,7 @@ app.post('/api/updateGenericNumber', function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error")
+      console.log(err);
       reject(new Error('...'));
       client.end();
     } else {
@@ -131,11 +131,11 @@ app.post('/api/createAccount', function(req, res, next) {
     }
   });
   console.log("Connected!");
-  var sql = "INSERT INTO account(acc_firstName, acc_lastName, acc_email, acc_type) VALUES ('" + req.query.firstName + "','" + req.query.lastName + "','" + req.query.email + "'," +  req.query.accType + ');';
+  var sql = "INSERT INTO account(acc_name, acc_email) VALUES ('" + req.query.name + "','" + req.query.email + ');';
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error");
+      console.log(err);
       reject(new Error('...'));
       client.end();
     } else {
@@ -161,7 +161,7 @@ app.post('/api/createCourse', function(req, res, next) {
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error");
+      console.log(err);
       reject(new Error('...'));
       client.end();
     } else {
@@ -302,7 +302,7 @@ app.get('/api/getNoteByAccAndSection', function(req, res, next) {
   console.log("Query being sent     to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
-      console.log("error");
+      console.log(err);
       reject(new Error('...'));
       client.end();
     } else {

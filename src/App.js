@@ -77,14 +77,25 @@ class App extends Component {
           provider_pic: resp.w3.Paa
         }
       }
-      if (userData != null)
+      console.log(userData.name);
+      if (userData != null) {
         sessionStorage.setItem("userData", JSON.stringify(userData));
-      fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
-      .then(function(response) {
-        return response.json()
-      }).then((response) => {
-        console.log(response);
-      }).catch((error) => console.log(error));
+      }
+    //   fetch('http://localhost:5000/api/createAccount?getColumn=acc_email&table=account&compColumn=acc_id&val=1', {
+    //       method: 'POST',
+    //       headers: {'Content-Type':'application/json'},
+    //       body: JSON.stringify({
+    //         //   acc_firstName : userData.name}),
+
+    //   });
+
+      /* Does not work correctly */
+    //   fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
+    //   .then(function(response) {
+    //     return response.json()
+    //   }).then((response) => {
+    //     console.log(response);
+    //   }).catch((error) => console.log(error));
 
     },
 
