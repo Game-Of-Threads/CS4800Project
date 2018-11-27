@@ -129,8 +129,8 @@ app.post('/api/createAccount', function(req, res, next) {
     }
   });
   console.log('Connected!');
-  var sql = "INSERT INTO account(acc_name, acc_email) " + 
-            "VALUES ('"+ req.body.name + "', '" + req.body.email + "') " + 
+  var sql = "INSERT INTO account(acc_name, acc_email) " +
+            "VALUES ('"+ req.body.name + "', '" + req.body.email + "') " +
             "ON CONFLICT(acc_email) DO UPDATE SET acc_name = '" + req.body.name + "';";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
@@ -272,7 +272,7 @@ app.post('/api/getNoteBySection', function(req, res, next) {
   });
   console.log("Connected!");
   console.log("REQUEST BODY: ", req.body);
-  var sql = "SELECT note_title, note_text, note_id, course_name FROM note WHERE course_name = '" + req.body.course_name + "';";
+  var sql = "SELECT note.note_text, note.note_title, note.note_id, note.course_name, account.acc_name, account.acc_email FROM note, account WHERE note.course_name ='" + req.body.course_name + "'AND account.acc_id = note.acc_id;";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {

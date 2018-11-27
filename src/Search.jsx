@@ -18,7 +18,8 @@ class Search extends Component {
     fetch('http://localhost:5000/api/getNoteBySection?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
       method: 'POST',
       body : JSON.stringify({
-        course_name : this.state.courseName.toUpperCase()
+        course_name : this.state.courseName.toUpperCase(),
+        acc_name : this.state.acc_name.toUpperCase()
       }),
       headers: {'Content-Type':'application/json'}
     }).then((response) => {
@@ -30,15 +31,15 @@ class Search extends Component {
   }
   updateState(e) {
       e.preventDefault();
-      this.setState({courseName : e.target.value})
-  } 
+      this.setState({courseName : e.target.value, acc_name : e.target.value})
+  }
 
   render(){
     var notes = this.state.noteArray.map((item, key) =>
     <AppContext.Consumer>
       {(context) => (
                <nav key={key} id={key} className="panel-block">
-                  <span className="hast-text-weight-is-bold">{item.note_title || "Untitled Note"}</span> : {item.note_text}
+                  <span className="hast-text-weight-is-bold">{item.note_title + " by " + item.acc_name || "Untitled Note"}</span> : {item.note_text}
                   <button className="button" onClick={() => context.addNoteToLibrary(item)}>Add to Library</button>
                 </nav>
               )}
