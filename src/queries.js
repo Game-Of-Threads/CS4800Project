@@ -245,7 +245,7 @@ app.get('/api/getNoteByUser', function(req, res, next) {
     }
   });
   console.log("Connected!");
-  var sql = "SELECT note_text FROM note WHERE acc_id = " + req.query.accId + ";";
+  var sql = "SELECT * FROM note WHERE acc_id = (SELECT acc_id FROM account WHERE acc_email = " + req.body.emailTemp + ");";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
