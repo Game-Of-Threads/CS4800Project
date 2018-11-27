@@ -110,21 +110,22 @@ class App extends Component {
     },
 
     addNote : () => {
+      var note = { title: "New Note",
+                   data: "",
+                   id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+                   rating : 1,
+                   secID : 1,
+                   courseName : "" }
       fetch('http://localhost:5000/api/createNote?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({
-          noteText : "",
-          mode: "cors", // no-cors, cors, *same-origin
-          credentials: "same-origin", // include, *same-origin, omit
-          noteTitle : "Untitled Note",
-          rating : 1,
-          secID : 1
-        })
+        credentials: "same-origin", // include, *same-origin, omit
+        mode: "cors", // no-cors, cors, *same-origin
+        body: JSON.stringify(note)
       }).then((response) => {
         console.log(response);
       });
-      var newArray = this.state.user.noteArray.concat({title: "New Note", data: ""});
+      var newArray = this.state.user.noteArray.concat(note);
       this.setState({
         user : {
           name : this.state.user.name,
@@ -137,23 +138,30 @@ class App extends Component {
     },
 
     addNoteToLibrary : (note) => {
-      console.log(note);
       var formattedNote = {
         title: note.note_title,
         id: note.note_id,
         courseName : note.course_name,
         data: note.note_text
       }
-      var newArray = this.state.user.noteArray.concat(formattedNote);
-      this.setState({
-        user : {
-          name : this.state.user.name,
-          schoolName : this.state.user.schoolName,
-          major : this.state.user.major,
-          reputation : this.state.user.reputation,
-          noteArray : newArray
-        },
-      })
+      var found = false;
+      for (var i = 0; i < this.state.user.noteArray.length; i++) {
+        if(this.state.user.noteArray[i].id === formattedNote.id){
+          found = true;
+        }
+      }
+      if(!found){
+        var newArray = this.state.user.noteArray.concat(formattedNote);
+        this.setState({
+          user : {
+            name : this.state.user.name,
+            schoolName : this.state.user.schoolName,
+            major : this.state.user.major,
+            reputation : this.state.user.reputation,
+            noteArray : newArray
+          },
+        })
+      }
     },
 
     saveNote : (note) => {
@@ -187,7 +195,7 @@ class App extends Component {
       })
     },
 
-    // gets all the notes from the database that the user has saved 
+    // gets all the notes from the database that the user has saved
     getSavedNotesFromUser(tempArray) {
       fetch('http://localhost:5000/api/getNoteByUser?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
       .then(function(response) {
@@ -218,15 +226,15 @@ class App extends Component {
     return (
       <AppContext.Provider value={this.state}>
       <div className="App">
-        <main className="container">
           <Header userIsSignedIn={this.state.userIsSignedIn}></Header>
+          <main className="container">
           <Switch>
             <Route exact path="/" component={LoginComponent} />
             <Route path="/notebook" component={Notebook} />
             <Route path="/account" component={UserPreferences} />
             <Route path="/search" component={Search} />
           </Switch>
-        </main>
+          </main>
       </div>
     </AppContext.Provider>
     );

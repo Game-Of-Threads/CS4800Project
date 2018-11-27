@@ -9,20 +9,25 @@ class Header extends Component {
     }
     render() {
         return (
-                  <nav className="navbar">
-                    <nav className="title is-2">Bronco Note</nav>
+                  <nav className="navbar is-light">
+                    <nav className="title is-2"><font color="#1E4D2B">Bronco Note</font></nav>
                     <div className="navbar-start">
                       <Link to="/notebook"><a className="navbar-item">Notebook</a></Link>
                       <Link to="/search">  <a className="navbar-item">Search  </a></Link>
                       <AppContext.Consumer>
                         {(context) => (
                           sessionStorage.getItem('userIsSignedIn') ? (
-                          <div>
                             <Link to="/account"> <a className="navbar-item">Account </a></Link>
-                            <Link to="/"><nav className="navbar-item" onClick={context.signOutUser}>Logout</nav></Link>
-                          </div>
                         )
-                          : undefined
+                          : null
+                        )}
+                      </AppContext.Consumer>
+                      <AppContext.Consumer>
+                        {(context) => (
+                          sessionStorage.getItem('userIsSignedIn') ? (
+                            <Link to="/"><a className="navbar-item" onClick={context.signOutUser}>Logout</a></Link>
+                        )
+                          : null
                         )}
                       </AppContext.Consumer>
                       <AppContext.Consumer>
@@ -32,7 +37,7 @@ class Header extends Component {
                             <Link to="/"><nav className="navbar-item">Login</nav></Link>
                           </div>
                         )
-                          : undefined
+                          : null
                         )}
                       </AppContext.Consumer>
                     </div>

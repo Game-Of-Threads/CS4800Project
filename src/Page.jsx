@@ -13,13 +13,15 @@ class Page extends Component {
             schoolName: "" || "Unnamed School",
             saved: true,
             note : this.props.note,
-            AStimer: 0, //autosave timer, resets to 5000 after every change
+            AStimer: null, //autosave timer, resets to 5000 after every change
         }
         // NOTE:
         //Every function must be bound to the component through these statements
         this.updateState = this.updateState.bind(this);
         this.updateCourseName = this.updateCourseName.bind(this)
         this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+        this.updateNoteTitle = this.updateNoteTitle.bind(this);
+        this.updateNoteText = this.updateNoteText.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -39,6 +41,19 @@ class Page extends Component {
         })
     }
 
+    updateNoteText(e){
+      e.preventDefault();
+      this.setState({
+        note : {
+          title : this.state.note.title,
+          data : e.target.value,
+          score : this.state.note.score,
+          id : this.state.note.id,
+          courseName : this.state.note.courseName
+        }
+      })
+    }
+
     updateCourseName(e){
       e.preventDefault();
       this.setState({
@@ -48,6 +63,18 @@ class Page extends Component {
           score : this.state.note.score,
           id : this.state.note.id,
           courseName : e.target.value
+        },
+      })
+    }
+    updateNoteTitle(e){
+      e.preventDefault();
+      this.setState({
+        note : {
+          title : e.target.value,
+          data : this.state.note.data,
+          score : this.state.note.score,
+          id : this.state.note.id,
+          courseName : this.state.note.courseName
         }
       })
     }
@@ -56,11 +83,11 @@ class Page extends Component {
           <AppContext.Consumer>
             {(context) => (
               <div>
-                  <p className="subtitle"><input type="text" className="input" onChange={this.updateState} placeholder={this.state.note.title}/> {`from ${context.user.name} at ${context.user.schoolName}`}</p>
+                  <p className="subtitle"><input type="text" className="input" onChange={this.updateNoteTitle} placeholder={this.state.note.title}/> {`from ${context.user.name} at ${context.user.schoolName}`}</p>
                   <input type="text" onChange={this.updateCourseName} value={this.state.note.courseName} className="input"/>
                   <div className="columns">
                       <div className="column">
-                          <textarea id="data" className="textarea" value={this.state.note.data} rows="20" onChange={this.updateState}></textarea>
+                          <textarea id="data" className="textarea" value={this.state.note.data} rows="20" onChange={this.updateNoteText}></textarea>
                           <br />
                           <button className="button" onClick={() => context.saveNote(this.state.note)}>Save</button>
                       </div>

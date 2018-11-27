@@ -50,12 +50,14 @@ class Search extends Component {
               <input type="text" className="input" id="courseName" onChange={this.updateState}placeholder="Search by Course Name (e.g ENG1000)"/>
               <button className="button" onClick={this.searchByCourseName}>Search</button>
               <nav className="panel">
-                {notes}
+                {notes ? notes :
+                  (<div className="hero">
+                    <h1 className="title">Whoops, looks like there's no notes for that class!</h1>
+                  </div>)}
               </nav>
           </div>
     )
   }
 }
-
 
 export default Search;
