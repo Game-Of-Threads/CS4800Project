@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
-var request = require("request");
+var cors = require('cors');
+var request = require('request');
 var bodyParser = require('body-parser');
 var userDetails;
 const port = process.env.PORT || 5000;
@@ -8,6 +9,7 @@ app.use(bodyParser.urlencoded())
 var jsonParser = bodyParser.json()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
 
 app.get('/api/', function(req, res) {
   res.json('default');
@@ -118,18 +120,17 @@ app.post('/api/updateGenericNumber', function(req, res, next) {
 
 app.post('/api/createAccount', function(req, res, next) {
   var pg = require('pg');
-  var conString = "postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2";
+  var conString = 'postgres://AllNotes:Cs48001!@dbv2.cjmjfhlkhtzb.us-west-1.rds.amazonaws.com:5432/DBV2';
   var client = new pg.Client(conString);
-  console.log("About to Connect!");
+  console.log('About to Connect!');
   client.connect(function(err) {
     if (err) {
       return console.error('could not connect to postgres', err);
     }
   });
-  console.log("Connected!");
-  var sql = "INSERT INTO account(acc_firstName, acc_email) VALUES ("
-                                        + req.body.firstName + ", "
-                                        + req.body.email + ");";
+  console.log('Connected!');
+  var sql = "INSERT INTO account(acc_name, acc_email) " + 
+            "VALUES ('"+ req.body.name + "', '" + req.body.email + "');";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {

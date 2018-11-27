@@ -77,27 +77,27 @@ class App extends Component {
       if (userData != null) {
         sessionStorage.setItem("userData", JSON.stringify(userData));
       }
-      var tempArray = this.state.user.noteArray;
-      this.state.getSavedNotesFromUser(tempArray);
-    //   // adds the account's name & email to database
-    //   fetch('http://localhost:5000/api/createAccount?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
-    //     method: 'POST',
-    //     headers: {'Content-Type':'application/json'},
-    //     body: JSON.stringify({
-    //       firstName : String(userData.name).split(" ")[0],
-    //       email : userData.email
-    //     })
-    //   }).then((response) => {
-    //     console.log(response);
-    //   });
-
-    //   /* Does not work correctly */
-      fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
-      .then(function(response) {
-        return response.json()
+    //   var tempArray = this.state.user.noteArray;
+    //   this.state.getSavedNotesFromUser(tempArray);
+      // adds the account's name & email to database
+      fetch('http://localhost:5000/api/createAccount?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+            name : userData.name,
+            email : userData.email
+        })
       }).then((response) => {
         console.log(response);
-      }).catch((error) => console.log(error));
+      });
+
+    //   /* Does not work correctly */
+    //   fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1')
+    //   .then(function(response) {
+    //     return response.json()
+    //   }).then((response) => {
+    //     console.log(response);
+    //   }).catch((error) => console.log(error));
 
     },
 
@@ -116,7 +116,7 @@ class App extends Component {
                    rating : 1,
                    secID : 1,
                    courseName : "" }
-      fetch('http://localhost:5000/api/createNote?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
+      fetch('http://localhost:5000/api/createNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         credentials: "same-origin", // include, *same-origin, omit
@@ -165,7 +165,7 @@ class App extends Component {
     },
 
     saveNote : (note) => {
-      fetch('http://localhost:5000/api/saveNote?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
+      fetch('http://localhost:5000/api/saveNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
@@ -197,7 +197,7 @@ class App extends Component {
 
     // gets all the notes from the database that the user has saved
     getSavedNotesFromUser(tempArray) {
-      fetch('http://localhost:5000/api/getNoteByUser?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1')
+      fetch('http://localhost:5000/api/getNoteByUser?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1')
       .then(function(response) {
         response.json()
         .then(function(result){
