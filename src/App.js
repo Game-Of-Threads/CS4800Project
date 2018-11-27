@@ -48,7 +48,7 @@ class App extends Component {
       ]
     },
 
-    signInUser : (resp) => {
+    signInUser : function(resp) {
       var auth2 = gapi.auth2.getAuthInstance();
       var profile = auth2.currentUser.get().getBasicProfile();
       sessionStorage.setItem("userIsSignedIn", true);
@@ -78,11 +78,14 @@ class App extends Component {
       if (userData !== null) {
         sessionStorage.setItem("userData", JSON.stringify(userData));
       }
-      // var tempArray = this.state.user.noteArray;
-	   //console.log(this.state.user.email);
-	  // var tempMail = this.state.user.email;
-	   //console.log(tempMail);
-       //this.state.getSavedNotesFromUser(tempArray, userData.email);
+
+      let tempArray = this.state.user.noteArray;
+	    console.log(this.state.user.email);
+	    let tempMail = this.state.user.email;
+	    console.log(tempMail);
+      console.log("Calling getSavedNotesFromUser....");
+      this.state.getSavedNotesFromUser(tempArray, userData.email);
+
       // adds the account's name & email to database
       fetch('http://localhost:5000/api/createAccount?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
@@ -104,7 +107,7 @@ class App extends Component {
     //     console.log(response);
     //   }).catch((error) => console.log(error));
 
-    },
+  }.bind(this),
 
     signOutUser : () => {
       sessionStorage.removeItem("userData");
@@ -121,7 +124,7 @@ class App extends Component {
                    rating : 1,
                    secID : 1,
                    courseName : "",
-                   name : this.state.user.name, 
+                   name : this.state.user.name,
                    email : this.state.user.email }
         fetch('http://localhost:5000/api/createNote?note_id=idnoteRating=rating&noteTitle=title&noteText=data&secid=secID&accEmail=email', {
     	method: 'POST',
@@ -203,7 +206,7 @@ class App extends Component {
     },
 
     // gets all the notes from the database that the user has saved
-    getSavedNotesFromUser(tempArray, emailTemp) {
+    getSavedNotesFromUser: function(tempArray, emailTemp) {
       fetch('http://localhost:5000/api/getNoteByUser?accEmail=' + emailTemp)
       .then(function(response) {
         response.json()
@@ -222,7 +225,7 @@ class App extends Component {
         reputation : this.state.user.reputation,
         noteArray : tempArray}
       })
-    }
+    }.bind(this)
   }
 
   constructor(props){
