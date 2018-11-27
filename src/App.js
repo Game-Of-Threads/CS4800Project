@@ -233,6 +233,10 @@ class App extends Component {
 
   constructor(props){
     super(props);
+    // gets notes upon refresh
+    if(this.state.userIsSignedIn){
+        this.state.getSavedNotesFromUser();
+    }
   }
 
   render() {
