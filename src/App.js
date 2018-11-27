@@ -111,17 +111,17 @@ class App extends Component {
       this.setState({userIsSignedIn: false, user: tempUser});
     },
 
-    addNote : () => {
+     addNote : () => {
       var note = { title: "New Note",
                    data: "",
                    id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
                    rating : 1,
                    secID : 1,
                    courseName : "",
-                   name : this.state.user.name,
+                   name : this.state.user.name, 
                    email : this.state.user.email }
-      fetch('http://localhost:5000/api/createNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
-        method: 'POST',
+        fetch('http://localhost:5000/api/createNote?note_id=idnoteRating=rating&noteTitle=title&noteText=data&secid=secID&accEmail=email', {
+    	method: 'POST',
         headers: {'Content-Type':'application/json'},
         credentials: "same-origin", // include, *same-origin, omit
         mode: "cors", // no-cors, cors, *same-origin
