@@ -211,7 +211,7 @@ class App extends Component {
       .then(function(response) {
         return response.json()
       }).then(function(result){
-        tempArray.concat(result);
+        tempArray = tempArray.concat(result);
         return result;
       }).then((response, result) => {
         console.log(response);
