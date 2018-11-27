@@ -75,7 +75,7 @@ class NoteList extends Component {
 
   render() {
      var noteList = this.state.noteArray.map((object, index) => <div className = "panel-block"
-                  id={index} key={index} data = {object.data || "Loading"} onClick={this.changeNote}> {object.title || "Loading"}</div>)
+                  id={index} key={index} data = {object.note_text || "Loading"} onClick={this.changeNote}> {object.note_title || "Loading"}</div>)
      return (
         <AppContext.Consumer>
           {(context) => (

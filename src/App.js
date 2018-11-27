@@ -24,26 +24,26 @@ class App extends Component {
       reputation: 1000,
       noteArray: [
         {
-          title: "Midterm Review",
+          note_title: "Midterm Review",
           id: 0,
-          courseName : "4800",
-          data: "## Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in officia deserunt mollit anim id est laborum."
+          course_name : "4800",
+          note_text: "## Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in officia deserunt mollit anim id est laborum."
         }, {
-          title: "djksahdfkjdlsf",
+          note_title: "djksahdfkjdlsf",
           id : 1,
-          courseName : "4800",
-          data: "Test 2"
+          course_name : "4800",
+          note_text: "Test 2"
         }, {
-          title: "Im very stressed",
+          note_title: "Im very stressed",
           id: 2,
-          courseName : "CS4800",
-          data: "Heh, nothing personell kid"
+          course_name : "CS4800",
+          note_text: "Heh, nothing personell kid"
         }
         , {
-          title : "Success",
+          note_title : "Success",
           id: 3,
-          courseName : "CS4800",
-          data  : "It worked!"
+          course_name : "CS4800",
+          note_text  : "It worked!"
         }
       ]
     },
@@ -78,13 +78,8 @@ class App extends Component {
       if (userData !== null) {
         sessionStorage.setItem("userData", JSON.stringify(userData));
       }
-
-      let tempArray = this.state.user.noteArray;
-	    console.log(this.state.user.email);
-	    let tempMail = this.state.user.email;
-	    console.log(tempMail);
       console.log("Calling getSavedNotesFromUser....");
-      this.state.getSavedNotesFromUser(tempArray, userData.email);
+      this.state.getSavedNotesFromUser();
 
       // adds the account's name & email to database
       fetch('http://localhost:5000/api/createAccount?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
@@ -206,24 +201,32 @@ class App extends Component {
     },
 
     // gets all the notes from the database that the user has saved
-    getSavedNotesFromUser: function(tempArray, emailTemp) {
-      fetch('http://localhost:5000/api/getNoteByUser?accEmail=' + emailTemp)
+    getSavedNotesFromUser: function() {
+      const that = this;  
+      var tempArray = [];
+      fetch('http://localhost:5000/api/getNoteByUser?accEmail=' + that.state.user.email)
       .then(function(response) {
         return response.json()
-      }).then(function(result){
-        tempArray = tempArray.concat(result);
+      }).then(function(result){ 
+        for(var i=0; i < result.rows.length; i++){
+            tempArray[i] = result.rows[i];
+        } 
+        that.setState({
+          user: {
+            name: that.state.user.name,
+            schoolName: that.state.user.schoolName,
+            major: that.state.user.major,
+            reputation: that.state.user.reputation,
+            noteArray: that.state.user.noteArray.concat(tempArray)
+          }
+        })
+        console.log(that.state.user.noteArray);
         return result;
       }).then((response, result) => {
         console.log(response);
         console.log(result);
       }).catch((error) => console.log(error));
-      this.setState({user : {
-        name : this.state.user.name,
-        schoolName : this.state.user.schoolName,
-        major : this.state.user.major,
-        reputation : this.state.user.reputation,
-        noteArray : tempArray}
-      })
+
     }.bind(this)
   }
 

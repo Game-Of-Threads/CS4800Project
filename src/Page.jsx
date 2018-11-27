@@ -9,7 +9,7 @@ class Page extends Component {
         super(props);
         this.state = {
             author: this.props.username || "Anonymous",
-            title: this.props.note.title || "Untitled Note",
+            note_title: this.props.note.note_title || "Untitled Note",
             schoolName: "" || "Unnamed School",
             saved: true,
             note : this.props.note,
@@ -31,12 +31,12 @@ class Page extends Component {
         e.preventDefault();
         this.setState({
             note : {
-              title : this.state.note.title,
-              data : this.state.note.data,
+              note_title : this.state.note.note_title,
+              note_text : this.state.note.note_text,
               [e.target.id]: e.target.value,
               score : this.state.note.score,
               id : this.state.note.id,
-              courseName : this.state.note.courseName
+              course_name : this.state.note.course_name
             },
         })
     }
@@ -45,11 +45,11 @@ class Page extends Component {
       e.preventDefault();
       this.setState({
         note : {
-          title : this.state.note.title,
-          data : e.target.value,
+          note_title : this.state.note.note_title,
+          note_text : e.target.value,
           score : this.state.note.score,
           id : this.state.note.id,
-          courseName : this.state.note.courseName
+          course_name : this.state.note.course_name
         }
       })
     }
@@ -58,11 +58,11 @@ class Page extends Component {
       e.preventDefault();
       this.setState({
         note : {
-          title : this.state.note.title,
-          data : this.state.note.data,
+          note_title : this.state.note.note_title,
+          note_text : this.state.note.note_text,
           score : this.state.note.score,
           id : this.state.note.id,
-          courseName : e.target.value
+          course_name : e.target.value
         },
       })
     }
@@ -70,11 +70,11 @@ class Page extends Component {
       e.preventDefault();
       this.setState({
         note : {
-          title : e.target.value,
-          data : this.state.note.data,
+          note_title : e.target.value,
+          note_text : this.state.note.note_text,
           score : this.state.note.score,
           id : this.state.note.id,
-          courseName : this.state.note.courseName
+          course_name : this.state.note.course_name
         }
       })
     }
@@ -83,17 +83,17 @@ class Page extends Component {
           <AppContext.Consumer>
             {(context) => (
               <div>
-                  <p className="subtitle"><input type="text" className="input" onChange={this.updateNoteTitle} placeholder={this.state.note.title}/> {`from ${context.user.name} at ${context.user.schoolName}`}</p>
-                  <input type="text" onChange={this.updateCourseName} value={this.state.note.courseName} className="input"/>
+                  <p className="subtitle"><input type="text" className="input" onChange={this.updateNoteTitle} placeholder={this.state.note.note_title}/> {`from ${context.user.name} at ${context.user.schoolName}`}</p>
+                  <input type="text" onChange={this.updateCourseName} value={this.state.note.course_name} className="input"/>
                   <div className="columns">
                       <div className="column">
-                          <textarea id="data" className="textarea" value={this.state.note.data} rows="20" onChange={this.updateNoteText}></textarea>
+                          <textarea id="data" className="textarea" value={this.state.note.note_text} rows="20" onChange={this.updateNoteText}></textarea>
                           <br />
                           <button className="button" onClick={() => context.saveNote(this.state.note)}>Save</button>
                       </div>
                       <div className="column">
                           <span className="markdown-body">
-                              <Markdown markup={this.state.note.data} />
+                              <Markdown markup={this.state.note.note_text} />
                           </span>
                       </div>
                   </div>
