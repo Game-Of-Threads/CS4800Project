@@ -183,14 +183,13 @@ app.post('/api/createNote', function(req, res, next) {
   });
   console.log("Connected!");
    //var sql = "ALTER TABLE note ALTER COLUMN acc_id varchar(255);";
-  var sql = "INSERT INTO note(note_rating, note_id, note_title, note_text, course_name, sch_crs_sec_id, acc_id) VALUES ("
-                                                + req.body.rating + ", '"
-                                                + req.body.id + "' , '"
-                                                + req.body.noteTitle + "' , '"
-                                                + req.body.noteText + "', '"
-                                                + req.body.secID + "' , "
-                                                + 1 + ", "
-                                                + 1 + ");";
+   var sql = "INSERT INTO note(note_rating, note_id, note_title, note_text, course_name, sch_crs_sec_id, acc_id) VALUES ("
+                                                   + req.body.rating + ", '"
+                                                   + req.body.id + "' , '"
+                                                   + req.body.noteTitle + "' , '"
+                                                   + req.body.noteText + "', '"
+                                                   + req.body.secID + "' , "
+                                                   + 1 + "(SELECT acc_id FROM account WHERE acc_email = '" + req.body.email + "' ));";
                                                 
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
