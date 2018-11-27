@@ -75,7 +75,7 @@ class App extends Component {
           provider_pic: resp.w3.Paa
         }
       }
-      if (userData != null) {
+      if (userData !== null) {
         sessionStorage.setItem("userData", JSON.stringify(userData));
       }
     //   var tempArray = this.state.user.noteArray;
@@ -90,7 +90,8 @@ class App extends Component {
         })
       }).then((response) => {
         console.log(response);
-      });
+        window.location.href = '/notebook';
+      }).catch((error) => console.log(error));
 
     //   /* Does not work correctly */
     //   fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1')
@@ -117,7 +118,7 @@ class App extends Component {
                    rating : 1,
                    secID : 1,
                    courseName : "",
-                   name : this.state.user.name, 
+                   name : this.state.user.name,
                    email : this.state.user.email }
       fetch('http://localhost:5000/api/createNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
