@@ -84,7 +84,7 @@ class Page extends Component {
             {(context) => (
               <div>
                   <p className="subtitle"><input type="text" className="input" onChange={this.updateNoteTitle} placeholder={this.state.note.note_title}/> {`from ${context.user.name} at ${context.user.schoolName}`}</p>
-                  <input type="text" onChange={this.updateCourseName} value={this.state.note.course_name} className="input"/>
+                  <input type="text" onChange={this.updateCourseName} value={this.state.note.course_name} placeholder="Class name" className="input"/>
                   <div className="columns">
                       <div className="column">
                           <textarea id="data" className="textarea" value={this.state.note.note_text} rows="20" onChange={this.updateNoteText}></textarea>

@@ -11,7 +11,7 @@ class NoteBookSelection extends Component{
   }
   render(){
     var binder = this.state.binder.map((object, index) => <div className = "box"
-                 id={index} key={index}> {object.courseName}</div>)
+                 id={index} key={index}> {object.course_name}</div>)
     return(
       <AppContext.Consumer>
         {(context) => {

@@ -186,9 +186,9 @@ app.post('/api/createNote', function(req, res, next) {
   var sql = "INSERT INTO note(note_id, note_rating, note_title, note_text, course_name, sch_crs_sec_id, acc_id) VALUES ('"
 												   + req.body.id + "', "
                            + req.body.rating + ", '"
-                           + req.body.title + "' , '"
-                           + req.body.data + "', '"
-                           + req.body.courseName + "' , "
+                           + req.body.note_title + "' , '"
+                           + req.body.note_text + "', '"
+                           + req.body.course_name + "' , "
                            + 1 + ", (SELECT acc_id FROM account WHERE acc_email = '" + req.body.email + "' ));";
 
   console.log("Query being sent to the db" + sql);

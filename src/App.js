@@ -20,8 +20,8 @@ class App extends Component {
       name : (sessionStorage.getItem("userData")) ? JSON.parse(sessionStorage.getItem("userData")).name : "Anonymous",
       schoolName : "Cal Poly Pomona",
       major: "Computer Science",
-      email: (sessionStorage.getItem("userData")) ? JSON.parse(sessionStorage.getItem("userData")).email : "N/A",
       reputation: 1000,
+      email: (sessionStorage.getItem("userData")) ? JSON.parse(sessionStorage.getItem("userData")).email : "N/A",
       noteArray: [
         {
           note_title: "Midterm Review",
@@ -58,9 +58,10 @@ class App extends Component {
           name : profile.getName(),
           id : profile.getId(),
           email : profile.getEmail(),
-          schoolName : "Cal Poly Pomona",
+          schoolName : this.state.user.schoolName,
           binder : this.state.user.binder,
           major : this.state.user.major,
+          reputation : this.state.user.reputation,
           noteArray : this.state.user.noteArray
         }
       })
@@ -91,7 +92,7 @@ class App extends Component {
         })
       }).then((response) => {
         console.log(response);
-        window.location.href = '/notebook';
+        // window.location.href = '/notebook';
       }).catch((error) => console.log(error));
 
     //   /* Does not work correctly */
@@ -113,12 +114,12 @@ class App extends Component {
     },
 
      addNote : () => {
-      var note = { title: "New Note",
-                   data: "",
+      var note = { note_title: "New Note",
+                   note_text: "",
                    id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
                    rating : 1,
                    secID : 1,
-                   courseName : "",
+                   course_name : "",
                    name : this.state.user.name,
                    email : this.state.user.email }
         fetch('http://localhost:5000/api/createNote?note_id=idnoteRating=rating&noteTitle=title&noteText=data&secid=secID&accEmail=email', {
