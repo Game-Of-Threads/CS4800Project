@@ -209,12 +209,10 @@ class App extends Component {
     getSavedNotesFromUser: function(tempArray, emailTemp) {
       fetch('http://localhost:5000/api/getNoteByUser?accEmail=' + emailTemp)
       .then(function(response) {
-        response.json()
-        .then(function(result){
-          tempArray.concat(result);
-          this.setState({user: {noteArray: tempArray}});
-          return result;
-        })
+        return response.json()
+      }).then(function(result){
+        tempArray.concat(result);
+        return result;
       }).then((response, result) => {
         console.log(response);
         console.log(result);
