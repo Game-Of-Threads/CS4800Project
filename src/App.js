@@ -24,26 +24,10 @@ class App extends Component {
       email: (sessionStorage.getItem("userData")) ? JSON.parse(sessionStorage.getItem("userData")).email : "N/A",
       noteArray: [
         {
-          note_title: "Midterm Review",
+          note_title: " ",
           id: 0,
-          course_name : "4800",
-          note_text: "## Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in officia deserunt mollit anim id est laborum."
-        }, {
-          note_title: "djksahdfkjdlsf",
-          id : 1,
-          course_name : "4800",
-          note_text: "Test 2"
-        }, {
-          note_title: "Im very stressed",
-          id: 2,
-          course_name : "CS4800",
-          note_text: "Heh, nothing personell kid"
-        }
-        , {
-          note_title : "Success",
-          id: 3,
-          course_name : "CS4800",
-          note_text  : "It worked!"
+          course_name : " ",
+          note_text: " "
         }
       ]
     },
@@ -113,26 +97,10 @@ class App extends Component {
       this.setState({userIsSignedIn: false, user: tempUser});
       this.state.user.noteArray = [
         {
-          note_title: "Midterm Review",
+          note_title: " ",
           id: 0,
-          course_name : "4800",
-          note_text: "## Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in officia deserunt mollit anim id est laborum."
-        }, {
-          note_title: "djksahdfkjdlsf",
-          id : 1,
-          course_name : "4800",
-          note_text: "Test 2"
-        }, {
-          note_title: "Im very stressed",
-          id: 2,
-          course_name : "CS4800",
-          note_text: "Heh, nothing personell kid"
-        }
-        , {
-          note_title : "Success",
-          id: 3,
-          course_name : "CS4800",
-          note_text  : "It worked!"
+          course_name : " ",
+          note_text: " "
         }
       ]
     },
@@ -144,7 +112,7 @@ class App extends Component {
                    rating : 1,
                    secID : 1,
                    course_name : "",
-                   name : this.state.user.name, 
+                   name : this.state.user.name,
                    email : this.state.user.email }
         fetch('http://localhost:5000/api/createNote?note_id=idnoteRating=rating&noteTitle=title&noteText=data&secid=secID&accEmail=email', {
     	method: 'POST',
@@ -169,14 +137,14 @@ class App extends Component {
     },
 
     addNoteToLibrary : (note) => {
-      var formattedNote = { 
+      var formattedNote = {
                    note_title: note.note_title,
                    note_text: note.note_text,
                    id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
                    rating : 1,
                    secID : 1,
                    course_name : note.course_name,
-                   name : this.state.user.name, 
+                   name : this.state.user.name,
                    email : this.state.user.email }
         var newArray = this.state.user.noteArray.concat(formattedNote);
         this.setState({
@@ -225,12 +193,12 @@ class App extends Component {
 
     // gets all the notes from the database that the user has saved
     getSavedNotesFromUser: function(oldNoteArray) {
-      const that = this;  
+      const that = this;
       var tempArray = [];
       fetch('http://localhost:5000/api/getNoteByUser?accEmail=' + that.state.user.email)
       .then(function(response) {
         return response.json()
-      }).then(function(result){ 
+      }).then(function(result){
         for(var i=0; i < result.rows.length; i++){
             tempArray[i] = result.rows[i];
         }
