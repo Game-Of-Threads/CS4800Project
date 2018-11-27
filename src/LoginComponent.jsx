@@ -59,7 +59,7 @@ class LoginComponent extends Component {
             {(context) => (
               <div className="container">
                 <div className="box">
-                  <h1 className="title is-2">Get Started with Bronco Notes!</h1>
+                  <h1 className="title is-2">Get Started with Bronco Note!</h1>
                   <label className={`has-text-${this.state.messageStatus}`}> {this.state.message}<br></br></label>
                   <GoogleLogin
                     clientId="690986198979-e6btiprgsgp69hlrc5p589bsnnfbikue.apps.googleusercontent.com"

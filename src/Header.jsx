@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 import { Link } from 'react-router-dom';
 import AppContext from './AppProvider.jsx'
+import AppLogo from './bronconote logo.png'
 
 class Header extends Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class Header extends Component {
     render() {
         return (
                   <nav className="navbar is-light">
+                    <nav className="navbar-brand"><figure className="image is-64x64"><img src={AppLogo} alt=""/></figure></nav>
                     <nav className="title is-2"><font color="#1E4D2B">Bronco Note</font></nav>
                     <div className="navbar-start">
                       <Link to="/notebook"><a className="navbar-item">Notebook</a></Link>
