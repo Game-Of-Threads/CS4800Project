@@ -212,6 +212,7 @@ class App extends Component {
         response.json()
         .then(function(result){
           tempArray.concat(result);
+          this.setState({user: {noteArray: tempArray}});
           return result;
         })
       }).then((response, result) => {
