@@ -78,8 +78,11 @@ class App extends Component {
       if (userData !== null) {
         sessionStorage.setItem("userData", JSON.stringify(userData));
       }
-    //   var tempArray = this.state.user.noteArray;
-    //   this.state.getSavedNotesFromUser(tempArray);
+      // var tempArray = this.state.user.noteArray;
+	   //console.log(this.state.user.email);
+	  // var tempMail = this.state.user.email;
+	   //console.log(tempMail);
+       //this.state.getSavedNotesFromUser(tempArray, userData.email);
       // adds the account's name & email to database
       fetch('http://localhost:5000/api/createAccount?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
@@ -200,8 +203,8 @@ class App extends Component {
     },
 
     // gets all the notes from the database that the user has saved
-    getSavedNotesFromUser(tempArray) {
-      fetch('http://localhost:5000/api/getNoteByUser?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1')
+    getSavedNotesFromUser(tempArray, emailTemp) {
+      fetch('http://localhost:5000/api/getNoteByUser?accEmail=' + emailTemp)
       .then(function(response) {
         response.json()
         .then(function(result){
