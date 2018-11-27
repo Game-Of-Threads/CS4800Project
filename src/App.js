@@ -20,7 +20,8 @@ class App extends Component {
       name : (sessionStorage.getItem("userData")) ? JSON.parse(sessionStorage.getItem("userData")).name : "Anonymous",
       schoolName : "Cal Poly Pomona",
       major: "Computer Science",
-      reputation: 0,
+      email: (sessionStorage.getItem("userData")) ? JSON.parse(sessionStorage.getItem("userData")).email : "N/A",
+      reputation: 1000,
       noteArray: [
         {
           title: "Midterm Review",
@@ -115,7 +116,9 @@ class App extends Component {
                    id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
                    rating : 1,
                    secID : 1,
-                   courseName : "" }
+                   courseName : "",
+                   name : this.state.user.name, 
+                   email : this.state.user.email }
       fetch('http://localhost:5000/api/createNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},

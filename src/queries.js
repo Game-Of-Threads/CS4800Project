@@ -130,7 +130,8 @@ app.post('/api/createAccount', function(req, res, next) {
   });
   console.log('Connected!');
   var sql = "INSERT INTO account(acc_name, acc_email) " + 
-            "VALUES ('"+ req.body.name + "', '" + req.body.email + "');";
+            "VALUES ('"+ req.body.name + "', '" + req.body.email + "') " + 
+            "ON CONFLICT(acc_email) DO UPDATE SET acc_name = '" + req.body.name + "';";
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
@@ -190,7 +191,7 @@ app.post('/api/createNote', function(req, res, next) {
                                                 + req.body.secID + "' , "
                                                 + 1 + ", "
                                                 + 1 + ");";
-
+                                                
   console.log("Query being sent to the db" + sql);
   client.query(sql, function(err, result) {
     if (err) {
