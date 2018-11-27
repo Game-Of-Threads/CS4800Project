@@ -111,6 +111,30 @@ class App extends Component {
       let tempUser = this.state.user;
       tempUser.name = "Undefined"
       this.setState({userIsSignedIn: false, user: tempUser});
+      this.state.user.noteArray = [
+        {
+          note_title: "Midterm Review",
+          id: 0,
+          course_name : "4800",
+          note_text: "## Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in officia deserunt mollit anim id est laborum."
+        }, {
+          note_title: "djksahdfkjdlsf",
+          id : 1,
+          course_name : "4800",
+          note_text: "Test 2"
+        }, {
+          note_title: "Im very stressed",
+          id: 2,
+          course_name : "CS4800",
+          note_text: "Heh, nothing personell kid"
+        }
+        , {
+          note_title : "Success",
+          id: 3,
+          course_name : "CS4800",
+          note_text  : "It worked!"
+        }
+      ]
     },
 
      addNote : () => {
