@@ -92,7 +92,7 @@ class App extends Component {
         })
       }).then((response) => {
         console.log(response);
-        // window.location.href = '/notebook';
+        window.location.href = '/notebook';
       }).catch((error) => console.log(error));
 
     //   /* Does not work correctly */
@@ -120,7 +120,7 @@ class App extends Component {
                    rating : 1,
                    secID : 1,
                    course_name : "",
-                   name : this.state.user.name,
+                   name : this.state.user.name, 
                    email : this.state.user.email }
         fetch('http://localhost:5000/api/createNote?note_id=idnoteRating=rating&noteTitle=title&noteText=data&secid=secID&accEmail=email', {
     	method: 'POST',
@@ -136,6 +136,7 @@ class App extends Component {
         user : {
           name : this.state.user.name,
           schoolName : this.state.user.schoolName,
+          email : this.state.user.email,
           major : this.state.user.major,
           reputation : this.state.user.reputation,
           noteArray : newArray
@@ -144,30 +145,26 @@ class App extends Component {
     },
 
     addNoteToLibrary : (note) => {
-      var formattedNote = {
-        title: note.note_title,
-        id: note.note_id,
-        courseName : note.course_name,
-        data: note.note_text
-      }
-      var found = false;
-      for (var i = 0; i < this.state.user.noteArray.length; i++) {
-        if(this.state.user.noteArray[i].id === formattedNote.id){
-          found = true;
-        }
-      }
-      if(!found){
+      var formattedNote = { 
+                   note_title: note.note_title,
+                   note_text: note.note_text,
+                   id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+                   rating : 1,
+                   secID : 1,
+                   course_name : note.course_name,
+                   name : this.state.user.name, 
+                   email : this.state.user.email }
         var newArray = this.state.user.noteArray.concat(formattedNote);
         this.setState({
-          user : {
+            user : {
             name : this.state.user.name,
             schoolName : this.state.user.schoolName,
+            email : this.state.user.email,
             major : this.state.user.major,
             reputation : this.state.user.reputation,
             noteArray : newArray
-          },
+            },
         })
-      }
     },
 
     saveNote : (note) => {
@@ -175,11 +172,11 @@ class App extends Component {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
-          noteText : note.data,
-          noteTitle : note.title,
-          noteID : note.id,
+          note_text : note.note_text,
+          note_title : note.note_title,
+          id : note.id,
           rating : 1,
-          course_name : note.courseName.toUpperCase() || "Undefined"
+          course_name : note.course_name.toUpperCase() || "Undefined"
         })
       }).then((response) => {
         console.log(response);
@@ -194,6 +191,7 @@ class App extends Component {
       })
       this.setState({user : {
         name : this.state.user.name,
+        email : this.state.user.email,
         schoolName : this.state.user.schoolName,
         major : this.state.user.major,
         reputation : this.state.user.reputation,
@@ -202,7 +200,7 @@ class App extends Component {
     },
 
     // gets all the notes from the database that the user has saved
-    getSavedNotesFromUser: function() {
+    getSavedNotesFromUser: function(oldNoteArray) {
       const that = this;  
       var tempArray = [];
       fetch('http://localhost:5000/api/getNoteByUser?accEmail=' + that.state.user.email)
@@ -211,14 +209,16 @@ class App extends Component {
       }).then(function(result){ 
         for(var i=0; i < result.rows.length; i++){
             tempArray[i] = result.rows[i];
-        } 
+        }
+        tempArray = tempArray.concat(oldNoteArray);
         that.setState({
           user: {
             name: that.state.user.name,
+            email: that.state.user.email,
             schoolName: that.state.user.schoolName,
             major: that.state.user.major,
             reputation: that.state.user.reputation,
-            noteArray: that.state.user.noteArray.concat(tempArray)
+            noteArray: that.arrayUnique(that.state.user.noteArray.concat(tempArray))
           }
         })
         console.log(that.state.user.noteArray);
@@ -231,11 +231,23 @@ class App extends Component {
     }.bind(this)
   }
 
+    // used to delete duplicates in array concatenation
+    arrayUnique(array) {
+        var a = array.concat();
+        for(var i=0; i<a.length; ++i) {
+            for(var j=i+1; j<a.length; ++j) {
+                if(a[i] === a[j])
+                    a.splice(j--, 1);
+            }
+        }
+    return a;
+    }
+
   constructor(props){
     super(props);
     // gets notes upon refresh
     if(this.state.userIsSignedIn){
-        this.state.getSavedNotesFromUser();
+        this.state.getSavedNotesFromUser(this.state.user.noteArray);
     }
   }
 

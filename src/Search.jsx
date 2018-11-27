@@ -31,7 +31,8 @@ class Search extends Component {
   updateState(e) {
       e.preventDefault();
       this.setState({courseName : e.target.value})
-  }
+  } 
+
   render(){
     var notes = this.state.noteArray.map((item, key) =>
     <AppContext.Consumer>

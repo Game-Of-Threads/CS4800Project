@@ -18,6 +18,7 @@ class UserPreferences extends Component {
                 <h2><span className="has-text-weight-semibold">School: </span>{context.user.schoolName}</h2>
                 <h2><span className="has-text-weight-semibold">Major: </span>{context.user.major}</h2>
                 <h2><span className="has-text-weight-semibold">Reputation: </span>{context.user.reputation}</h2>
+                <h2><span className="has-text-weight-semibold">email: </span>{context.user.email}</h2>
               </div>
             }
           </AppContext.Consumer>
