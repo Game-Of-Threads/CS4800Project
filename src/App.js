@@ -25,7 +25,7 @@ class App extends Component {
       noteArray: [
         {
           note_title: " ",
-          id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+          note_id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
           course_name : " ",
           note_text: " "
         }
@@ -98,7 +98,7 @@ class App extends Component {
       this.state.user.noteArray = [
         {
           note_title: " ",
-          id: 0,
+          note_id: 0,
           course_name : " ",
           note_text: " "
         }
@@ -108,7 +108,7 @@ class App extends Component {
    addNote : () => {
       var note = { note_title: "New Note",
                    note_text: "",
-                   id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+                   note_id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
                    rating : 1,
                    secID : 1,
                    course_name : "",
@@ -141,7 +141,7 @@ class App extends Component {
       var formattedNote = {
                    note_title: note.note_title,
                    note_text: note.note_text,
-                   id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+                   note_id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
                    rating : 1,
                    secID : 1,
                    course_name : note.course_name,
@@ -169,7 +169,7 @@ class App extends Component {
         body: JSON.stringify({
           note_text : note.note_text,
           note_title : note.note_title,
-          id : note.id,
+          id : note.note_id,
           rating : 1,
           course_name : note.course_name.toUpperCase() || "Undefined"
         })
@@ -177,15 +177,8 @@ class App extends Component {
         console.log(response);
       });
       var newArray = this.state.user.noteArray.map((item) => {
-
-        if(item.note_id === note.note_id){
-          console.log("Item,", item.note_id);
-          console.log("Note", note.note_id);
-          return note;
-        }
-        else {
-          return item;
-        }
+        if(item.note_id === note.note_id){return note;}
+        else {return item;}
       })
       this.setState({user : {
         name : this.state.user.name,
@@ -195,7 +188,6 @@ class App extends Component {
         reputation : this.state.user.reputation,
         noteArray : newArray}
       })
-      console.log(this.state.user.noteArray);
     },
 
     // gets all the notes from the database that the user has saved
