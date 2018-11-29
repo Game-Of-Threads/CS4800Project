@@ -105,7 +105,7 @@ class App extends Component {
       ]
     },
 
-     addNote : () => {
+   addNote : () => {
       var note = { note_title: "New Note",
                    note_text: "",
                    id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
@@ -160,13 +160,14 @@ class App extends Component {
     },
 
     saveNote : (note) => {
+      console.log(note);
       fetch('http://localhost:5000/api/saveNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
           note_text : note.note_text,
           note_title : note.note_title,
-          id : note.id,
+          id : note.note_id,
           rating : 1,
           course_name : note.course_name.toUpperCase() || "Undefined"
         })
@@ -174,7 +175,7 @@ class App extends Component {
         console.log(response);
       });
       var newArray = this.state.user.noteArray.map((item) => {
-        if(item.id === note.id){
+        if(item.note_id === note.note_id){
           return note;
         }
         else {
@@ -202,7 +203,7 @@ class App extends Component {
         for(var i=0; i < result.rows.length; i++){
             tempArray[i] = result.rows[i];
         }
-        tempArray = tempArray.concat(oldNoteArray);
+        tempArray = tempArray;
         that.setState({
           user: {
             name: that.state.user.name,
@@ -216,7 +217,6 @@ class App extends Component {
         console.log(that.state.user.noteArray);
         return result;
       }).then((response, result) => {
-        console.log(response);
         console.log(result);
       }).catch((error) => console.log(error));
 

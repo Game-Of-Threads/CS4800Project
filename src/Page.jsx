@@ -35,7 +35,7 @@ class Page extends Component {
               note_text : this.state.note.note_text,
               [e.target.id]: e.target.value,
               score : this.state.note.score,
-              id : this.state.note.id,
+              note_id : this.state.note.note_id,
               course_name : this.state.note.course_name
             },
         })
@@ -48,7 +48,7 @@ class Page extends Component {
           note_title : this.state.note.note_title,
           note_text : e.target.value,
           score : this.state.note.score,
-          id : this.state.note.id,
+          note_id : this.state.note.note_id,
           course_name : this.state.note.course_name
         }
       })
@@ -61,7 +61,7 @@ class Page extends Component {
           note_title : this.state.note.note_title,
           note_text : this.state.note.note_text,
           score : this.state.note.score,
-          id : this.state.note.id,
+          note_id : this.state.note.note_id,
           course_name : e.target.value
         },
       })
@@ -73,7 +73,7 @@ class Page extends Component {
           note_title : e.target.value,
           note_text : this.state.note.note_text,
           score : this.state.note.score,
-          id : this.state.note.id,
+          note_id : this.state.note.note_id,
           course_name : this.state.note.course_name
         }
       })
@@ -89,7 +89,7 @@ class Page extends Component {
                       <div className="column">
                           <textarea id="data" className="textarea" value={this.state.note.note_text} rows="20" onChange={this.updateNoteText}></textarea>
                           <br />
-                          <button className="button" onClick={() => context.saveNote(this.state.note)}>Save</button>
+                          <button className="button is-success" onClick={() => {console.log(this.state.note); context.saveNote(this.state.note)} }>Save</button>
                       </div>
                       <div className="column">
                           <span className="markdown-body">

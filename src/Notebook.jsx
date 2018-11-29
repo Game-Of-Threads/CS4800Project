@@ -81,7 +81,7 @@ class NoteList extends Component {
           {(context) => (
             <nav className="panel"> <div className="panel-heading">Notes</div>
             {noteList}
-            <button className="button is-fullwidth is-light has-text-weight-semibold" onClick={context.addNote}> New Note</button>
+            <button className="button is-fullwidth is-light has-text-weight-semibold has-text-primary" onClick={context.addNote}> New Note</button>
             </nav>
           )}
         </AppContext.Consumer>
