@@ -25,7 +25,7 @@ class App extends Component {
       noteArray: [
         {
           note_title: " ",
-          id: 0,
+          id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
           course_name : " ",
           note_text: " "
         }
@@ -64,10 +64,10 @@ class App extends Component {
         sessionStorage.setItem("userData", JSON.stringify(userData));
       }
       console.log("Calling getSavedNotesFromUser....");
-      this.state.getSavedNotesFromUser();
+      //this.state.getSavedNotesFromUser();
 
       // adds the account's name & email to database
-      fetch('http://localhost:5000/api/createAccount?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
+      fetch('http://ec2-13-56-253-7.us-west-1.compute.amazonaws.com:5000/api/createAccount?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
@@ -80,7 +80,7 @@ class App extends Component {
       }).catch((error) => console.log(error));
 
     //   /* Does not work correctly */
-    //   fetch('http://localhost:5000/api/getAllAccInfo?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1')
+    //   fetch('http://ec2-13-56-253-7.us-west-1.compute.amazonaws.com:5000/api/getAllAccInfo?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1')
     //   .then(function(response) {
     //     return response.json()
     //   }).then((response) => {
@@ -114,7 +114,7 @@ class App extends Component {
                    course_name : "",
                    name : this.state.user.name,
                    email : this.state.user.email }
-        fetch('http://localhost:5000/api/createNote?note_id=idnoteRating=rating&noteTitle=title&noteText=data&secid=secID&accEmail=email', {
+        fetch('http://ec2-13-56-253-7.us-west-1.compute.amazonaws.com:5000/api/createNote?note_id=idnoteRating=rating&noteTitle=title&noteText=data&secid=secID&accEmail=email', {
     	method: 'POST',
         headers: {'Content-Type':'application/json'},
         credentials: "same-origin", // include, *same-origin, omit
@@ -134,6 +134,7 @@ class App extends Component {
           noteArray : newArray
         },
       })
+      console.log(this.state.user.noteArray);
     },
 
     addNoteToLibrary : (note) => {
@@ -157,17 +158,18 @@ class App extends Component {
             noteArray : newArray
             },
         })
+        console.log(this.state.noteArray);
     },
 
     saveNote : (note) => {
       console.log(note);
-      fetch('http://localhost:5000/api/saveNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
+      fetch('http://ec2-13-56-253-7.us-west-1.compute.amazonaws.com:5000/api/saveNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
           note_text : note.note_text,
           note_title : note.note_title,
-          id : note.note_id,
+          id : note.id,
           rating : 1,
           course_name : note.course_name.toUpperCase() || "Undefined"
         })
@@ -175,7 +177,10 @@ class App extends Component {
         console.log(response);
       });
       var newArray = this.state.user.noteArray.map((item) => {
+
         if(item.note_id === note.note_id){
+          console.log("Item,", item.note_id);
+          console.log("Note", note.note_id);
           return note;
         }
         else {
@@ -190,13 +195,24 @@ class App extends Component {
         reputation : this.state.user.reputation,
         noteArray : newArray}
       })
+      console.log(this.state.user.noteArray);
     },
 
     // gets all the notes from the database that the user has saved
     getSavedNotesFromUser: function(oldNoteArray) {
       const that = this;
+      that.setState({
+        user: {
+          name: that.state.user.name,
+          email: that.state.user.email,
+          schoolName: that.state.user.schoolName,
+          major: that.state.user.major,
+          reputation: that.state.user.reputation,
+          noteArray: [],
+        }
+      })
       var tempArray = [];
-      fetch('http://localhost:5000/api/getNoteByUser?accEmail=' + that.state.user.email)
+      fetch('http://ec2-13-56-253-7.us-west-1.compute.amazonaws.com:5000/api/getNoteByUser?accEmail=' + that.state.user.email)
       .then(function(response) {
         return response.json()
       }).then(function(result){
@@ -211,7 +227,7 @@ class App extends Component {
             schoolName: that.state.user.schoolName,
             major: that.state.user.major,
             reputation: that.state.user.reputation,
-            noteArray: that.arrayUnique(that.state.user.noteArray.concat(tempArray))
+            noteArray: tempArray
           }
         })
         console.log(that.state.user.noteArray);

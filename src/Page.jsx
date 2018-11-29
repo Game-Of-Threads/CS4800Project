@@ -9,7 +9,6 @@ class Page extends Component {
         super(props);
         this.state = {
             author: this.props.username || "Anonymous",
-            note_title: this.props.note.note_title || "Untitled Note",
             schoolName: "" || "Unnamed School",
             saved: true,
             note : this.props.note,
@@ -17,7 +16,6 @@ class Page extends Component {
         }
         // NOTE:
         //Every function must be bound to the component through these statements
-        this.updateState = this.updateState.bind(this);
         this.updateCourseName = this.updateCourseName.bind(this)
         this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
         this.updateNoteTitle = this.updateNoteTitle.bind(this);
@@ -27,55 +25,30 @@ class Page extends Component {
     componentWillReceiveProps(nextProps) {
       this.setState({ note: nextProps.note});
     }
-    updateState(e) {
-        e.preventDefault();
-        this.setState({
-            note : {
-              note_title : this.state.note.note_title,
-              note_text : this.state.note.note_text,
-              [e.target.id]: e.target.value,
-              score : this.state.note.score,
-              note_id : this.state.note.note_id,
-              course_name : this.state.note.course_name
-            },
-        })
-    }
 
     updateNoteText(e){
       e.preventDefault();
+      let changes = {...this.state.note}
+      changes.note_text = e.target.value;
       this.setState({
-        note : {
-          note_title : this.state.note.note_title,
-          note_text : e.target.value,
-          score : this.state.note.score,
-          note_id : this.state.note.note_id,
-          course_name : this.state.note.course_name
-        }
+        note : changes
       })
     }
 
     updateCourseName(e){
       e.preventDefault();
+      let changes = {...this.state.note}
+      changes.course_name = e.target.value;
       this.setState({
-        note : {
-          note_title : this.state.note.note_title,
-          note_text : this.state.note.note_text,
-          score : this.state.note.score,
-          note_id : this.state.note.note_id,
-          course_name : e.target.value
-        },
+        note : changes
       })
     }
     updateNoteTitle(e){
       e.preventDefault();
+      let changes = {...this.state.note}
+      changes.note_title = e.target.value,
       this.setState({
-        note : {
-          note_title : e.target.value,
-          note_text : this.state.note.note_text,
-          score : this.state.note.score,
-          note_id : this.state.note.note_id,
-          course_name : this.state.note.course_name
-        }
+        note : changes
       })
     }
     render() {
@@ -83,7 +56,7 @@ class Page extends Component {
           <AppContext.Consumer>
             {(context) => (
               <div>
-                  <p className="subtitle"><input type="text" className="input" onChange={this.updateNoteTitle} placeholder={this.state.note.note_title}/> {`from ${context.user.name} at ${context.user.schoolName}`}</p>
+                  <p className="subtitle"><input type="text" className="input" onChange={this.updateNoteTitle} placeholder={this.state.note.note_title || "Untitled"}/> {`from ${context.user.name} at ${context.user.schoolName}`}</p>
                   <input type="text" onChange={this.updateCourseName} value={this.state.note.course_name} placeholder="Class name" className="input"/>
                   <div className="columns">
                       <div className="column">
