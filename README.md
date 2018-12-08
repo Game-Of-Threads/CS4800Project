@@ -1,4 +1,4 @@
-![alt text](http://www.bronconote.com/static/media/bronconote%20logo.a10c8b07.png)
+![alt text](https://github.com/Game-Of-Threads/CS4800Project/blob/master/src/logo.png)
 ## [Bronco Note](http://www.bronconote.com) 
 ## [Team page](http://cs480-projects.github.io/teams-fall2018/Game%20of%20Threads/index.html)
 ## Share your notes with your classmates without leaving the application.
