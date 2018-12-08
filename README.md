@@ -13,6 +13,9 @@ Created in ReactJS using Bulma.io, Node.js, and PostgreSQL
 * Drew Umlang
 * Michael Trinh
 ---
+## Graphic-Designer:
+* Jaeho Kim
+---
 ## Features/Usage:
 * Google oAuth login or anonymous
 * Posting and saving markdown-supported notes to database
