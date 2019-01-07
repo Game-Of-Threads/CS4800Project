@@ -64,7 +64,7 @@ class App extends Component {
         sessionStorage.setItem("userData", JSON.stringify(userData));
       }
       // adds the account's name & email to database
-      fetch('http://ec2-13-56-224-86.us-west-1.compute.amazonaws.com:5000/api/createAccount?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
+      fetch('http://ec2-13-56-246-122.us-west-1.compute.amazonaws.com:5000/api/createAccount?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
@@ -106,7 +106,7 @@ class App extends Component {
                    course_name : "",
                    name : this.state.user.name,
                    email : this.state.user.email }
-        fetch('http://ec2-13-56-224-86.us-west-1.compute.amazonaws.com:5000/api/createNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
+        fetch('http://ec2-13-56-246-122.us-west-1.compute.amazonaws.com:5000/api/createNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
     	method: 'POST',
         headers: {'Content-Type':'application/json'},
         credentials: "same-origin", // include, *same-origin, omit
@@ -155,7 +155,7 @@ class App extends Component {
 
     saveNote : (note) => {
       console.log(note);
-      fetch('http://ec2-13-56-224-86.us-west-1.compute.amazonaws.com:5000/api/saveNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
+      fetch('http://ec2-13-56-246-122.us-west-1.compute.amazonaws.com:5000/api/saveNote?getColumn=acc_firstname&table=account&compColumn=acc_id&val=1', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
@@ -196,7 +196,7 @@ class App extends Component {
         }
       })
       var tempArray = [];
-      fetch('http://ec2-13-56-224-86.us-west-1.compute.amazonaws.com:5000/api/getNoteByUser?accEmail=' + that.state.user.email)
+      fetch('http://ec2-13-56-246-122.us-west-1.compute.amazonaws.com:5000/api/getNoteByUser?accEmail=' + that.state.user.email)
       .then(function(response) {
         return response.json()
       }).then(function(result){

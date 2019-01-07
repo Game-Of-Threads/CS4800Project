@@ -64,7 +64,7 @@ class LoginComponent extends Component {
                   <label className={`has-text-${this.state.messageStatus}`}> {this.state.message}<br></br></label>
                   <div className="is-flex">
                   <GoogleLogin
-                    clientId="690986198979-e6btiprgsgp69hlrc5p589bsnnfbikue.apps.googleusercontent.com"
+                    clientId="1035740081051-1v5dhng88u8ge67i94iegap1c6n4u7qd.apps.googleusercontent.com"
                     buttonText="Log In with Google"
                     onSuccess={context.signInUser}
                     onFailure={this.onSignInFailure}/>

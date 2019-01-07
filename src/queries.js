@@ -18,7 +18,7 @@ app.get('/api/', function(req, res) {
 app.get("/api/genericGetCall", function(req, res, next) {
 
   var pg = require('pg');
-  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB";
+  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {
@@ -43,7 +43,7 @@ app.get("/api/genericGetCall", function(req, res, next) {
 
 app.get("/api/getAllAccInfo", function(req, res, next) {
   var pg = require('pg');
-  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB";
+  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {
@@ -69,7 +69,7 @@ app.get("/api/getAllAccInfo", function(req, res, next) {
 // Will update a value in the database with a string
 app.get('/api/updateGenericString', function(req, res, next) {
   var pg = require('pg');
-  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB";
+  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {
@@ -95,7 +95,7 @@ app.get('/api/updateGenericString', function(req, res, next) {
 // Will update a value in the database with a number value
 app.post('/api/updateGenericNumber', function(req, res, next) {
   var pg = require('pg');
-  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB";
+  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {
@@ -120,7 +120,7 @@ app.post('/api/updateGenericNumber', function(req, res, next) {
 
 app.post('/api/createAccount', function(req, res, next) {
   var pg = require('pg');
-  var conString = 'postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB';
+  var conString = 'postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb';
   var client = new pg.Client(conString);
   console.log('About to Connect!');
   client.connect(function(err) {
@@ -148,7 +148,7 @@ app.post('/api/createAccount', function(req, res, next) {
 
 app.post('/api/createCourse', function(req, res, next) {
   var pg = require('pg');
-  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB";
+  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {
@@ -173,7 +173,7 @@ app.post('/api/createCourse', function(req, res, next) {
 
 app.post('/api/createNote', function(req, res, next) {
   var pg = require('pg');
-  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB";
+  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {
@@ -207,7 +207,7 @@ app.post('/api/createNote', function(req, res, next) {
 
 app.post('/api/saveNote', function(req, res, next) {
   var pg = require('pg');
-  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB";
+  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {
@@ -236,7 +236,7 @@ app.post('/api/saveNote', function(req, res, next) {
 
 app.get('/api/getNoteByUser', function(req, res, next) {
   var pg = require('pg');
-  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB";
+  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {
@@ -262,7 +262,7 @@ app.get('/api/getNoteByUser', function(req, res, next) {
 
 app.post('/api/getNoteBySection', function(req, res, next) {
   var pg = require('pg');
-  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB";
+  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {
@@ -288,7 +288,7 @@ app.post('/api/getNoteBySection', function(req, res, next) {
 
 app.get('/api/getNoteByAccAndSection', function(req, res, next) {
   var pg = require('pg');
-  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/BroncoNoteDB";
+  var conString = "postgres://AllNotes:CS48001!@bronconotedb.cybfsmw3rjuo.us-west-1.rds.amazonaws.com:5432/bronconotedb";
   var client = new pg.Client(conString);
   console.log("About to Connect!");
   client.connect(function(err) {

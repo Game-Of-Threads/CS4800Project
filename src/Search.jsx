@@ -17,7 +17,7 @@ class Search extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
   searchByCourseName(){
-    fetch('http://ec2-13-56-224-86.us-west-1.compute.amazonaws.com:5000/api/getNoteBySection?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
+    fetch('http://ec2-13-56-246-122.us-west-1.compute.amazonaws.com:5000/api/getNoteBySection?getColumn=acc_firstName&table=account&compColumn=acc_id&val=1', {
       method: 'POST',
       body : JSON.stringify({
         course_name : this.state.courseName.toUpperCase(),
